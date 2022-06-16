@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 interface Header {
   value: string;
   text: string;
 }
-interface Props { 
+interface Props {
   items: Array<Object>;
   headers: Header[];
 }
@@ -20,7 +19,9 @@ defineProps<Props>();
     <tbody>
       <tr v-for="(item, index) in items" :key="index">
         <td v-for="(header, headerIndex) in headers" :key="headerIndex">
-          {{ item[header.value] }}
+          <slot :name="header.value">
+            {{ item[header.value] }}
+          </slot>
         </td>
       </tr>
     </tbody>
