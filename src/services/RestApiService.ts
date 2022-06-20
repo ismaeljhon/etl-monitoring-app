@@ -1,61 +1,47 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosInstance } from "axios";
 
 interface RestApiServiceOptions {
-  returnRawData?: boolean;
+  prefix?: string;
+  axiosInstance?: AxiosInstance;
 }
 
-export default class RestApiService {
-  axiosInstance: AxiosInstance;
+export default abstract class RestApiService<
+  Entity,
+  GetListDto = {},
+  CreateDto = {},
+  UpdateDto = {}
+> {
+  protected axiosInstance: AxiosInstance;
 
-  constructor(prefix: string = "") {
-    this.axiosInstance = axios.create({
-      baseURL: `${process.env.VUE_APP_URL}/${prefix}`,
+  constructor(opts: RestApiServiceOptions = {}) {
+    const { prefix = "", axiosInstance = null } = opts;
+    
+    this.axiosInstance = axiosInstance ?? axios.create({
+      baseURL: `https://jsonplaceholder.typicode.com/${prefix}`,
     });
   }
 
-  async axiosCall<T>(
-    config: AxiosRequestConfig,
-    opts: RestApiServiceOptions = {}
-  ) {
-    try {
-      const { returnRawData = false } = opts;
-      const res = await this.axiosInstance.request<T>(config);
-      return [null, returnRawData ? res : res.data];
-    } catch (err) {
-      return [err];
-    }
+  async getList(params?: GetListDto): Promise<Entity[]> {
+    const { data = [] } = await this.axiosInstance.get("/", {
+      params,
+    });
+    return data;
   }
 
-  async index(params = {}, opts: RestApiServiceOptions = {}) {
-    return this.axiosCall<AxiosResponse>(
-      { method: "get", url: "/", params },
-      opts
-    );
+  async get(id: string | number): Promise<Entity> {
+    const { data = [] } = await this.axiosInstance.get(`/${id}`);
+    return data;
   }
 
-  async get(id: string | number, opts: RestApiServiceOptions = {}) {
-    return this.axiosCall<AxiosResponse>(
-      { method: "get", url: `/${id}` },
-      opts
-    );
+  async insert(params: CreateDto): Promise<Entity> {
+    return this.axiosInstance.post("/", params);
   }
 
-  async insert(params = {}, opts: RestApiServiceOptions = {}) {
-    return this.axiosCall<AxiosResponse>({ method: "post", params }, opts);
+  async update(params: UpdateDto, id: number | string): Promise<Entity> {
+    return this.axiosInstance.patch(`/${id}`, params);
   }
 
-  async update(
-    params = {},
-    id: number | string,
-    opts: RestApiServiceOptions = {}
-  ) {
-    return this.axiosCall<AxiosResponse>(
-      { method: "patch", url: `/${id}`, params },
-      opts
-    );
-  }
-
-  async delete(id: string | number, opts: RestApiServiceOptions = {}) {
-    return this.axiosCall<void>({ method: "delete", url: `/${id}` }, opts);
+  async delete(id: string | number): Promise<void> {
+    this.axiosInstance.delete(`/${id}`);
   }
 }
