@@ -10,7 +10,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" class="pt-10">
-            <Companies></Companies>
+            <TableList :headers="headers" :items="posts" />
           </v-col>
         </v-row>
       </v-container>
@@ -19,6 +19,19 @@
 </template>
 
 <script setup lang="ts">
-import Companies from './components/Companies.vue';
+import { ref } from "vue";
+import { Post } from "./interfaces/post.interface";
+import TableList from "./components/base/TableList.vue";
+import PostsApiService from "./services/PostsApiService";
 
+const headers = [
+  { value: "id", text: "ID" },
+  { value: "title", text: "Title" },
+  { value: "body", text: "Body" },
+];
+
+const posts = ref<Post[]>([]);
+(async () => {
+  posts.value = await new PostsApiService().getList();
+})();
 </script>
