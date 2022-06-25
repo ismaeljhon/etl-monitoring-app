@@ -7,18 +7,20 @@ interface RestApiServiceOptions {
 
 export default abstract class RestApiService<
   Entity,
-  GetListDto = {},
-  CreateDto = {},
-  UpdateDto = {}
+  GetListDto = Record<string, any>,
+  CreateDto = Record<string, any>,
+  UpdateDto = Record<string, any>
 > {
   protected axiosInstance: AxiosInstance;
 
   constructor(opts: RestApiServiceOptions = {}) {
     const { prefix = "", axiosInstance = null } = opts;
-    
-    this.axiosInstance = axiosInstance ?? axios.create({
-      baseURL: `https://jsonplaceholder.typicode.com/${prefix}`,
-    });
+
+    this.axiosInstance =
+      axiosInstance ??
+      axios.create({
+        baseURL: `https://jsonplaceholder.typicode.com/${prefix}`,
+      });
   }
 
   async getList(params?: GetListDto): Promise<Entity[]> {
