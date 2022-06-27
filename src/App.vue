@@ -10,7 +10,11 @@
       <v-container>
         <v-row>
           <v-col cols="12" class="pt-10">
-            <TableList :headers="headers" :items="posts" />
+            <TableList :headers="headers" :items="posts">
+              <template #top-left>
+                <h3>Companies</h3>
+              </template>
+            </TableList>
           </v-col>
         </v-row>
       </v-container>
