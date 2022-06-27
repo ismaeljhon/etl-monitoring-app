@@ -19,7 +19,7 @@ export default abstract class RestApiService<
     this.axiosInstance =
       axiosInstance ??
       axios.create({
-        baseURL: `https://jsonplaceholder.typicode.com/${prefix}`,
+        baseURL: `${import.meta.env.VITE_API_BASE_URL}/${prefix}`,
       });
   }
 
