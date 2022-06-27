@@ -36,6 +36,6 @@ const headers = [
 
 const posts = ref<Post[]>([]);
 (async () => {
-  posts.value = await new PostsApiService().getList();
+  posts.value = await new PostsApiService().getList({ _start: 0, _limit: 5 });
 })();
 </script>
