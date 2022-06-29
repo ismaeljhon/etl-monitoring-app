@@ -12,7 +12,10 @@
           <v-col cols="12" class="pt-10">
             <TableList :headers="headers" :items="posts">
               <template #top-left>
-                <h3>Companies</h3>
+                <div class="text-h5">Companies</div>
+              </template>
+              <template #actions>
+                <a>View Details</a>
               </template>
             </TableList>
           </v-col>

@@ -17,51 +17,72 @@ const filter = reactive({
 });
 </script>
 <template>
-  <v-row>
-    <v-col>
+  <v-row justify="space-around" dense>
+    <v-col cols="12" md="12" lg="4">
       <slot name="top-left"> </slot>
     </v-col>
-    <v-col>
+    <v-col cols="12" md="12" lg="4">
       <slot name="top-middle">
-        <v-text-field v-model="filter.search" label="Search"></v-text-field>
+        <v-text-field v-model="filter.search" density="compact" variant="outlined" label="Search"></v-text-field>
       </slot>
     </v-col>
-    <v-col>
+    <v-col cols="12" md="12" lg="4">
       <slot name="top-right">
-        <v-pagination v-model="page" :length="6"></v-pagination>
+        <v-pagination v-model="page" :length="6" density="compact"></v-pagination>
       </slot>
     </v-col>
   </v-row>
-  <v-row>
-    <v-col>
-      <v-table>
-        <thead>
-          <tr>
-            <th v-for="item in headers" :key="item.value">{{ item.text }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in items" :key="index">
-            <td v-for="(header, headerIndex) in headers" :key="headerIndex">
-              <slot :name="header.value">
-                {{ item[header.value] }}
-              </slot>
-            </td>
-          </tr>
-        </tbody>
-      </v-table>
-    </v-col>
-  </v-row>
-  <v-row>
+  <div class="hidden-md-and-down">
+    <v-row>
+      <v-col>
+        <v-table>
+          <thead>
+            <tr>
+              <th v-for="item in headers" :key="item.value">{{ item.text }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in items" :key="index">
+              <td v-for="(header, headerIndex) in headers" :key="headerIndex">
+                <slot :name="header.value">
+                  {{ item[header.value] }}
+                </slot>
+              </td>
+            </tr>
+          </tbody>
+        </v-table>
+      </v-col>
+    </v-row>
+  </div>
+  <div class="hidden-sm-and-up">
+    <v-row>
+      <v-col v-for="i in items" cols="12">
+        <v-card height="250">
+          <v-card-title>
+           Company: {{ i.title }}
+          </v-card-title>
+          <v-card-subtitle>
+            Code: {{ i.body }}
+          </v-card-subtitle>
+          <v-card-actions>
+            <v-btn class="ml-2" variant="outlined" size="small">
+              View Details
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </div>
+  <v-row justify="center">
     <v-col>
       <slot name="botton-left"></slot>
     </v-col>
     <v-col>
       <slot name="botton-middle"></slot>
     </v-col>
-    <v-col>
+    <v-col cols="12" lg="4">
       <slot name="botton-right">
-        <v-pagination v-model="page" :length="6"></v-pagination>
+        <v-pagination v-model="page" density="compact" :length="6"></v-pagination>
       </slot>
     </v-col>
   </v-row>
