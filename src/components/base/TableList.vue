@@ -26,8 +26,9 @@ const filter = reactive({
         <slot name="top-left"> </slot>
       </v-col>
       <v-spacer></v-spacer>
-      <v-col cols="12" md="12" lg="3" v-if="search">
+      <v-col cols="12" md="12" lg="3" v-if="search"> <!--yeah not really sure about v-if="search"-->
         <slot name="top-middle">
+          <!-- remove default items in slots or utilize props for showing search element... hhhhhmmmmm -->
           <v-text-field
             v-model="filter.search"
             density="compact"
