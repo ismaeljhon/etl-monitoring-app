@@ -16,15 +16,22 @@ const items = [
   <v-card class="pa-10">
     <v-row>
       <v-col cols="12" lg="4">
-        <div class="text-h6 float-left">Overall ETL Monitored</div>
-        <div class="float-right">
-          <v-btn
-            icon="mdi-cached"
-            color="success"
-            variant="text"
-            size="small"
-          ></v-btn>
-        </div>
+        <v-row>
+          <v-col cols="12">
+            <div class="text-h6 float-left">Overall ETL Monitored</div>
+            <div class="float-right">
+              <v-btn
+                icon="mdi-cached"
+                color="success"
+                variant="text"
+                size="small"
+              ></v-btn>
+            </div>
+          </v-col>
+          <v-col cols="12">
+            <div class="text-h4">circles</div>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col cols="12" lg="8">
         <TableList :refresh="true" :items="items" :headers="headers">
