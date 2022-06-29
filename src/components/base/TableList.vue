@@ -8,6 +8,9 @@ interface Header {
 interface Props {
   items: Array<Object>;
   headers: Header[];
+  refresh?: Boolean;
+  pagination?: Boolean;
+  search?: Boolean;
 }
 defineProps<Props>();
 
@@ -19,10 +22,11 @@ const filter = reactive({
 <template>
   <v-card class="pa-10">
     <v-row justify="space-around" dense>
-      <v-col cols="12" md="12" lg="4">
+      <v-col cols="12" md="12" lg="3">
         <slot name="top-left"> </slot>
       </v-col>
-      <v-col cols="12" md="12" lg="4">
+      <v-spacer></v-spacer>
+      <v-col cols="12" md="12" lg="3" v-if="search">
         <slot name="top-middle">
           <v-text-field
             v-model="filter.search"
@@ -32,7 +36,7 @@ const filter = reactive({
           ></v-text-field>
         </slot>
       </v-col>
-      <v-col cols="12" md="12" lg="4">
+      <v-col cols="12" md="12" lg="3" v-if="pagination">
         <slot name="top-right">
           <v-pagination
             v-model="page"
@@ -41,9 +45,13 @@ const filter = reactive({
           ></v-pagination>
         </slot>
       </v-col>
+      <v-col cols="12" md="12" lg="3" v-if="refresh">
+        <v-btn class="ml-2" variant="outlined" size="small">
+          refresh
+        </v-btn>
+      </v-col>
     </v-row>
     <div class="hidden-md-and-down">
-      v-card
       <v-row>
         <v-col>
           <v-table height="500">
@@ -89,7 +97,7 @@ const filter = reactive({
       <v-col>
         <slot name="botton-middle"></slot>
       </v-col>
-      <v-col cols="12" lg="4">
+      <v-col cols="12" lg="3">
         <slot name="botton-right">
           <v-pagination
             v-model="page"

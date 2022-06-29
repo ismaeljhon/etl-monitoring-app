@@ -10,7 +10,13 @@
       <v-container>
         <v-row>
           <v-col cols="12" class="pt-10">
-            <TableList :headers="headers" :items="posts">
+            <TableList
+              :headers="headers"
+              :items="posts"
+              :refresh="false"
+              :search="true"
+              :pagination="true"
+            >
               <template #top-left>
                 <div class="text-h5">Companies</div>
               </template>
@@ -18,6 +24,11 @@
                 <a>View Details</a>
               </template>
             </TableList>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" class="pt-10">
+            <Dashboard></Dashboard>
           </v-col>
         </v-row>
       </v-container>
@@ -29,6 +40,7 @@
 import { ref } from "vue";
 import { Post } from "./interfaces/post.interface";
 import TableList from "./components/base/TableList.vue";
+import Dashboard from "./components/Dashboard.vue";
 import PostsApiService from "./services/PostsApiService";
 
 const headers = [
