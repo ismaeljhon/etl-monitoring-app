@@ -7,14 +7,31 @@
           <v-btn icon="mdi-dots-vertical"></v-btn>
         </template>
       </v-app-bar>
-      <v-container>
+      <v-container class="pa-5">
         <v-row>
           <v-col cols="12" class="pt-10">
-            <TableList :headers="headers" :items="posts">
+            <TableList
+              :headers="headers"
+              :items="posts"
+              :refresh="false"
+              :search="true"
+              :pagination="true"
+            >
               <template #top-left>
-                <h3>Companies</h3>
+                <div class="text-h5">Companies</div>
+              </template>
+              <template #actions>
+                <a>View Details</a>
+              </template>
+              <template #id-mobile>
+                <div class="text-h6"> Title: </div>
               </template>
             </TableList>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" class="pt-10">
+            <Dashboard></Dashboard>
           </v-col>
         </v-row>
       </v-container>
@@ -26,6 +43,7 @@
 import { ref } from "vue";
 import { Post } from "./interfaces/post.interface";
 import TableList from "./components/base/TableList.vue";
+import Dashboard from "./components/Dashboard.vue";
 import PostsApiService from "./services/PostsApiService";
 
 const headers = [
