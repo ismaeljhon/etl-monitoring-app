@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import TableList from "./base/TableList.vue";
+import BaseProgress from "./base/Progress.vue";
 
 const headers = [
   { value: "id", text: "ID" },
@@ -8,15 +9,15 @@ const headers = [
 ];
 
 const items = [
-  { company: "R00", status: "Ongoing", date: "date" },
-  { company: "R00", status: "Done", date: "date" },
+  { title: "R00", body: "Ongoing", date: "date" },
+  { title: "R00", body: "Done", date: "date" },
 ];
 </script>
 <template>
   <v-card class="pa-10">
     <v-row>
       <v-col cols="12" lg="4">
-        <v-row>
+        <v-row justify="">
           <v-col cols="12">
             <div class="text-h6 float-left">Overall ETL Monitored</div>
             <div class="float-right">
@@ -29,7 +30,25 @@ const items = [
             </div>
           </v-col>
           <v-col cols="12">
-            <div class="text-h4">circles</div>
+            <div class="text-h6"> date picker </div>
+          </v-col>
+          <v-col cols="12" lg="6">
+            <div class="text-h4 mx-auto text-center">
+              <BaseProgress>
+                <template #title>
+                  <div class="text-h6">Completed ETLs</div>
+                </template>
+              </BaseProgress>
+            </div>
+          </v-col>
+          <v-col cols="12" lg="6">
+            <div class="text-h4 mx-auto text-center">
+              <BaseProgress>
+                <template #title>
+                  <div class="text-h6">Ongoing ETLs</div>
+                </template>
+              </BaseProgress>
+            </div>
           </v-col>
         </v-row>
       </v-col>

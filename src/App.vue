@@ -7,7 +7,7 @@
           <v-btn icon="mdi-dots-vertical"></v-btn>
         </template>
       </v-app-bar>
-      <v-container>
+      <v-container class="pa-5">
         <v-row>
           <v-col cols="12" class="pt-10">
             <TableList
@@ -22,6 +22,9 @@
               </template>
               <template #actions>
                 <a>View Details</a>
+              </template>
+              <template #id-mobile>
+                <div class="text-h6"> Title: </div>
               </template>
             </TableList>
           </v-col>
