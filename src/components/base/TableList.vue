@@ -41,7 +41,7 @@ const filter = reactive({
         </slot>
       </v-col>
       <v-spacer></v-spacer>
-      <v-col cols="12" md="12" lg="3" v-if="pagination">
+      <!-- <v-col cols="12" md="12" lg="3" v-if="pagination">
         <slot name="top-right">
           <v-pagination
             v-model="page"
@@ -49,7 +49,7 @@ const filter = reactive({
             density="compact"
           ></v-pagination>
         </slot>
-      </v-col>
+      </v-col> -->
       <v-col cols="12" md="12" lg="3">
         <!-- <v-btn class="ml-2 float-lg-right" variant="outlined" size="small">
           refresh
@@ -60,6 +60,18 @@ const filter = reactive({
         >
           <template #label> refresh </template>
         </BaseButton>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-spacer></v-spacer>
+      <v-col cols="12" md="12" lg="3" v-if="pagination">
+        <slot name="top-right">
+          <v-pagination
+            v-model="page"
+            :length="6"
+            density="compact"
+          ></v-pagination>
+        </slot>
       </v-col>
     </v-row>
     <div class="hidden-md-and-down">
