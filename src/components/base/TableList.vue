@@ -51,9 +51,6 @@ const filter = reactive({
         </slot>
       </v-col> -->
       <v-col cols="12" md="12" lg="3">
-        <!-- <v-btn class="ml-2 float-lg-right" variant="outlined" size="small">
-          refresh
-        </v-btn> -->
         <BaseButton
           :class="mobile ? 'my-4' : 'float-lg-right'"
           :block="mobile ? true : false"

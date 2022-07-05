@@ -55,9 +55,11 @@
             </v-row>
           </v-window-item>
           <v-window-item :value="'tab-2'">
-            <v-card>
-              <v-card-text>{{ "window 2" }}</v-card-text>
-            </v-card>
+            <Etl>
+              <template #title>
+                <div class="text-h6 mx-2"> DevTest - R00</div>
+              </template>
+            </Etl>
           </v-window-item>
         </v-window>
       </v-container>
@@ -70,7 +72,7 @@ import { ref } from "vue";
 import { Post } from "./interfaces/post.interface";
 import TableList from "./components/base/TableList.vue";
 import Dashboard from "./components/Dashboard.vue";
-import Hero from "./components/Hero.vue";
+import Etl from "./components/Etl.vue"
 import PostsApiService from "./services/PostsApiService";
 
 const headers = [
