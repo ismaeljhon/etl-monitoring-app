@@ -1,49 +1,41 @@
 <template>
-  <v-app>
-    <v-main>
-      <v-app-bar color="primary" density="compact">
-        <v-app-bar-title>ETL Monitoring App</v-app-bar-title>
-        <template v-slot:append>
-          <v-btn icon="mdi-dots-vertical"></v-btn>
-        </template>
-      </v-app-bar>
-      <v-container class="pa-5">
-        <v-row>
-          <v-col cols="12" class="pt-10">
-            <TableList
-              :headers="headers"
-              :items="posts"
-              :refresh="false"
-              :search="true"
-              :pagination="true"
-            >
-              <template #top-left>
-                <div class="text-h5">Companies</div>
-              </template>
-              <template #actions>
-                <a>View Details</a>
-              </template>
-              <template #id-mobile>
-                <div class="text-h6"> Title: </div>
-              </template>
-            </TableList>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" class="pt-10">
-            <Dashboard></Dashboard>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-main>
-  </v-app>
+  <div>
+    <q-layout view="lHh lpr lFf" container style="height: 100vh">
+      <q-header elevated>
+        <q-toolbar>
+          <q-btn flat round dense icon="menu" class="q-mr-sm" />
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+
+          <q-toolbar-title>Quasar Framework</q-toolbar-title>
+
+          <q-btn flat round dense icon="whatshot" />
+        </q-toolbar>
+      </q-header>
+
+      <q-footer elevated>
+        <q-toolbar>
+          <q-toolbar-title>Footer</q-toolbar-title>
+        </q-toolbar>
+      </q-footer>
+
+      <q-page-container>
+        <q-page class="q-pa-md">
+          <p v-for="n in 15" :key="n">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos numquam rerum delectus commodi perferendis voluptate?
+          </p>
+        </q-page>
+      </q-page-container>
+    </q-layout>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { Post } from "./interfaces/post.interface";
-import TableList from "./components/base/TableList.vue";
-import Dashboard from "./components/Dashboard.vue";
+// import TableList from "./components/base/TableList.vue";
+// import Dashboard from "./components/Dashboard.vue";
 import PostsApiService from "./services/PostsApiService";
 
 const headers = [
