@@ -1,15 +1,21 @@
 <template>
-  <slot name="title" />
-  <v-progress-circular
-    :rotate="360"
-    :size="100"
-    :width="15"
-    :model-value="value"
-    color="teal"
-    class="ma-2"
-  >
-    {{ value }}
-  </v-progress-circular>
+  <div>
+    <div class="column items-center">
+      <slot name="title" />
+    </div>
+    <q-circular-progress
+      show-value
+      font-size="12px"
+      :value="value"
+      size="150px"
+      :thickness="0.22"
+      color="teal"
+      track-color="grey-3"
+      class="q-ma-md"
+    >
+      {{ value }}%
+    </q-circular-progress>
+  </div>
 </template>
 
 <script setup lang="ts">
