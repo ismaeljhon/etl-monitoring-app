@@ -22,7 +22,7 @@
 import { onMounted } from "vue";
 
 let interval = {};
-let value = 0;
+let value = 50;
 onMounted(() => {
   interval = setInterval(() => {
     if (value === 100) {

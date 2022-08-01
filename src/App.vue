@@ -7,7 +7,9 @@
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
 
-          <q-toolbar-title>ETL Monitoring App</q-toolbar-title>
+          <q-toolbar-title>
+            ETL Monitoring App
+          </q-toolbar-title>
 
           <q-btn flat round dense icon="whatshot" />
         </q-toolbar>
@@ -25,8 +27,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Post } from "./interfaces/post.interface";
-// import TableList from "./components/base/TableList.vue";
-// import Dashboard from "./components/Dashboard.vue";
 import PostsApiService from "./services/PostsApiService";
 
 const headers = [
