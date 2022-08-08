@@ -1,14 +1,12 @@
 <template>
-  <v-btn variant="outlined" :class="class" :size="size" :block="block">
-    <slot name="label" />
-  </v-btn>
+  <q-btn>
+    {{ title }}
+  </q-btn>
 </template>
 
 <script setup lang="ts">
 interface Props {
-  size?: string;
-  class?: string;
-  block: Boolean;
+  title?: string;
 }
 defineProps<Props>();
 </script>

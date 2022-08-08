@@ -1,10 +1,15 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import vuetify from './plugins/vuetify'
-import { loadFonts } from './plugins/webfontloader'
+import { createApp } from "vue";
+import App from "./App.vue";
+import { Quasar } from "quasar";
+import { router } from "./router";
+import "@quasar/extras/material-icons/material-icons.css";
+import "quasar/src/css/index.sass";
 
-loadFonts()
+const app = createApp(App);
 
-createApp(App)
-  .use(vuetify)
-  .mount('#app')
+app.use(router);
+app.use(Quasar, {
+  plugins: {},
+});
+
+app.mount("#app");

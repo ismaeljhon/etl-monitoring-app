@@ -1,11 +1,27 @@
 <script setup lang="ts">
-import TableList from "./base/TableList.vue";
-import BaseProgress from "./base/Progress.vue";
+import TableList from "../components/base/TableList.vue";
+import BaseProgress from "../components/base/Progress.vue";
 
+import { ref } from "vue";
+import DatePicker from "./base/DatePicker.vue";
+
+let date = ref("2019/02/01");
 const headers = [
-  { value: "id", text: "ID" },
-  { value: "title", text: "Title" },
-  { value: "body", text: "Body" },
+  {
+    name: "id",
+    align: "center",
+    label: "ID",
+    field: "id",
+    sortable: true,
+  },
+  {
+    name: "title",
+    align: "center",
+    label: "Title",
+    field: "title",
+    sortable: true,
+  },
+  { name: "body", align: "center", label: "Body", field: "body" },
 ];
 
 const items = [
@@ -14,51 +30,45 @@ const items = [
 ];
 </script>
 <template>
-  <v-card class="pa-10">
-    <v-row>
-      <v-col cols="12" lg="4">
-        <v-row justify="">
-          <v-col cols="12">
-            <div class="text-h6 float-left">Overall ETL Monitored</div>
-            <div class="float-right">
-              <v-btn
-                icon="mdi-cached"
-                color="success"
-                variant="text"
-                size="small"
-              ></v-btn>
-            </div>
-          </v-col>
-          <v-col cols="12">
-            <div class="text-h6"> date picker </div>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <div class="text-h4 mx-auto text-center">
-              <BaseProgress>
-                <template #title>
-                  <div class="text-h6">Completed ETLs</div>
-                </template>
-              </BaseProgress>
-            </div>
-          </v-col>
-          <v-col cols="12" lg="6">
-            <div class="text-h4 mx-auto text-center">
-              <BaseProgress>
-                <template #title>
-                  <div class="text-h6">Ongoing ETLs</div>
-                </template>
-              </BaseProgress>
-            </div>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12" lg="8">
-        <TableList :refresh="true" :items="items" :headers="headers">
-          <template #top-left>
-            <div class="text-h6">Latest ETL Logs</div>
-          </template>
-        </TableList>
-      </v-col>
-    </v-row>
-  </v-card>
+  <div class="q-pa-md">
+    <q-card class="q-pa-md">
+      <div class="row justify-center">
+        <div class="col-sm-12 col-lg-4">
+          <div class="column items-center">
+            <q-card-section>
+              <div class="text-h6">Overall ETL Monitored</div>
+              <DatePicker></DatePicker>
+            </q-card-section>
+            <q-separator inset />
+            <q-card-section>
+              <div class="col">
+                <BaseProgress>
+                  <template #title>
+                    <div>Completed ETLs</div>
+                  </template>
+                </BaseProgress>
+              </div>
+              <div class="col">
+                <BaseProgress>
+                  <template #title>
+                    <div>Ongoing ETLs</div>
+                  </template>
+                </BaseProgress>
+              </div>
+            </q-card-section>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-8">
+          <TableList
+            title="Latest ETL Logs"
+            :rows="items"
+            :columns="headers"
+            :refresh="false"
+            :search="true"
+            :pagination="true"
+          ></TableList>
+        </div>
+      </div>
+    </q-card>
+  </div>
 </template>
