@@ -6,7 +6,8 @@ export interface Post {
 }
 
 export interface GetListDto {
-  
+  _start: number;
+  _limit: number;
 }
 
 export interface CreatePostInput {
