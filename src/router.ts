@@ -3,7 +3,7 @@ import type { RouteRecordRaw } from "vue-router";
 
 import Home from "./views/Home.vue";
 import Etl from "./views/Etl.vue";
-import CompanyEtl from "./views/CompanyEtl.vue";
+import Sync from "./views/Sync.vue"
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -13,6 +13,10 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/etl/:code",
     component: Etl,
+  },
+  {
+    path: "/sync/:code",
+    component: Sync,
   },
 ];
 

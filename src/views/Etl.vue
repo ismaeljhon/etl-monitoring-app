@@ -43,7 +43,7 @@ const items = [
             </div>
           </div>
           <div class="float-right q-ma-lg">
-            <BaseButton :title="'NEW ETL REQUEST'" />
+            <BaseButton :type="'sync'" :todo="'request'" :code="$route.params.code.toString()" />
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ const items = [
         <div class="col-12 col-lg-4 column items-center">
           <BaseProgress>
             <template #title>
-              <div>Ongoing ETLs</div>
+              <div>Done ETLs</div>
             </template>
           </BaseProgress>
         </div>

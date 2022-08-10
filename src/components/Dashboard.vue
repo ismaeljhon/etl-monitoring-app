@@ -5,63 +5,88 @@ import BaseProgress from "../components/base/Progress.vue";
 import { ref } from "vue";
 import DatePicker from "./base/DatePicker.vue";
 
+interface Props {
+  syncs: Array<Object>;
+  etls: Array<Object>;
+}
+
 let date = ref("2019/02/01");
 const headers = [
   {
-    name: "id",
+    name: "name",
     align: "center",
-    label: "ID",
-    field: "id",
+    label: "Name",
+    field: "name",
     sortable: true,
   },
   {
-    name: "title",
+    name: "type",
     align: "center",
-    label: "Title",
-    field: "title",
+    label: "Type",
+    field: "type",
     sortable: true,
   },
-  { name: "body", align: "center", label: "Body", field: "body" },
+  {
+    name: "run_command",
+    align: "center",
+    label: "Run Command",
+    field: "run_command",
+  },
 ];
 
-const items = [
-  { title: "R00", body: "Ongoing", date: "date" },
-  { title: "R00", body: "Done", date: "date" },
-];
+const props = defineProps<Props>();
 </script>
 <template>
   <div class="q-pa-md">
     <q-card class="q-pa-md">
+      <q-card-section>
+        <div class="text-h6">Latest Webjobs</div>
+      </q-card-section>
       <div class="row justify-center">
-        <div class="col-sm-12 col-lg-4">
-          <div class="column items-center">
-            <q-card-section>
-              <div class="text-h6">Overall ETL Monitored</div>
-              <DatePicker></DatePicker>
-            </q-card-section>
-            <q-separator inset />
-            <q-card-section>
-              <div class="col">
-                <BaseProgress>
-                  <template #title>
-                    <div>Completed ETLs</div>
-                  </template>
-                </BaseProgress>
-              </div>
-              <div class="col">
-                <BaseProgress>
-                  <template #title>
-                    <div>Ongoing ETLs</div>
-                  </template>
-                </BaseProgress>
-              </div>
-            </q-card-section>
-          </div>
+        <div class="col-12 col-lg-3 column items-center">
+          <BaseProgress>
+            <template #title>
+              <div>Done ETLs</div>
+            </template>
+          </BaseProgress>
         </div>
-        <div class="col-sm-12 col-lg-8">
+        <div class="col-12 col-lg-3 column items-center">
+          <BaseProgress>
+            <template #title>
+              <div>Ongoing ETLs</div>
+            </template>
+          </BaseProgress>
+        </div>
+        <div class="col-12 col-lg-3 column items-center">
+          <BaseProgress>
+            <template #title>
+              <div>Done Syncs</div>
+            </template>
+          </BaseProgress>
+        </div>
+        <div class="col-12 col-lg-3 column items-center">
+          <BaseProgress>
+            <template #title>
+              <div>Ongoing Syncs</div>
+            </template>
+          </BaseProgress>
+        </div>
+      </div>
+      <div class="row justify-center">
+        <div class="col-sm-12 col-lg-12">
           <TableList
             title="Latest ETL Logs"
-            :rows="items"
+            :rows="etls"
+            :columns="headers"
+            :refresh="false"
+            :search="true"
+            :pagination="true"
+          ></TableList>
+        </div>
+        <div class="col-sm-12 col-lg-12">
+          <TableList
+            title="Latest Sync Logs"
+            :rows="syncs"
             :columns="headers"
             :refresh="false"
             :search="true"
