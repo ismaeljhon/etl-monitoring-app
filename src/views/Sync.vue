@@ -5,7 +5,7 @@ import TableList from "../components/base/TableList.vue";
 import Modal from "../components/base/Modal.vue";
 import { capitalize } from "../utils/utils";
 
-import { WebJob, WebJobRun } from '../interfaces/webjob.interface'
+import { WebJob, WebJobRun } from "../interfaces/webjob.interface";
 
 import SyncService from "../services/SyncService";
 
@@ -24,13 +24,23 @@ const headers = [
     field: "type",
     sortable: true,
   },
-  { name: "run_command", align: "center", label: "Run Command", field: "run_command" },
+  {
+    name: "run_command",
+    align: "center",
+    label: "Run Command",
+    field: "run_command",
+  },
 ];
 const webjobs = ref<WebJob[]>([]);
 (async () => {
   webjobs.value = await new SyncService().getList();
-  console.log(webjobs)
+  console.log(webjobs);
 })();
+
+const refreshTable = async () => {
+  webjobs.value = await new SyncService().getList({ refresh: true });
+};
+
 </script>
 
 <template>
@@ -39,23 +49,29 @@ const webjobs = ref<WebJob[]>([]);
       <div class="row">
         <div class="col">
           <div class="float-left q-ma-lg">
-            <div class="text-h6">
+            <!-- <div class="text-h6" v-if="$route.params.code">
               {{ capitalize($route.params.code.toString()) }}
-            </div>
+            </div> -->
           </div>
           <div class="float-right q-mt-lg q-mr-lg">
-            <Modal :type="'sync'" :todo="'request'" :code="$route.params.code.toString()" />
+            
+            <q-btn type="primary" @click="refreshTable">Refresh</q-btn>
+            <q-btn class="q-mx-md" @click=""> Sync Request </q-btn>
+            <!-- <Modal
+              :type="'sync'"
+              :todo="'request'"
+            /> -->
           </div>
         </div>
       </div>
-    <TableList
-      title="Latest Sync Logs"
-      :rows="webjobs"
-      :columns="headers"
-      :refresh="false"
-      :search="true"
-      :pagination="true"
-    ></TableList>
+      <TableList
+        title="Sync WebJobs"
+        :rows="webjobs"
+        :columns="headers"
+        :refresh="false"
+        :search="true"
+        :pagination="true"
+      ></TableList>
     </div>
   </q-card>
 </template>

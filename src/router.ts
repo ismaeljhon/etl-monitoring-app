@@ -11,11 +11,11 @@ export const routes: RouteRecordRaw[] = [
     component: Home,
   },
   {
-    path: "/etl/:code",
+    path: "/etl",
     component: Etl,
   },
   {
-    path: "/sync/:code",
+    path: "/sync",
     component: Sync,
   },
 ];

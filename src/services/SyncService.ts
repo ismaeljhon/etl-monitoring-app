@@ -6,9 +6,9 @@ export default class SyncService extends AzureTriggeredWebJobsService<WebJob> {
     super();
   }
 
-  async getList(): Promise<WebJob[]> {
+  async getList(opts = {}): Promise<WebJob[]> {
     return super
-      .getList()
+      .getList(opts)
       .then((res) => res.filter((item) => item?.name.includes('SYNC')));
   }
 }
