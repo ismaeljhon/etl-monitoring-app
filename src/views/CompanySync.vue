@@ -40,53 +40,50 @@ const headers = [
 ];
 const runs = ref([]);
 const route = useRoute();
-const alert = ref()
+const alert = ref();
 
 const fetchOutput = async (runs) => {
-  runs.map(run => {
-    new SyncService().getOutput(run.output_url)
-      .then(res => {
-        run.output = res
-      })
-    return run  
-  })
-}
+  runs.map((run) => {
+    new SyncService().getOutput(run.output_url).then((res) => {
+      run.output = res;
+    });
+    return run;
+  });
+};
 
 const confirmRequest = () => {
-  alert.value.toggleAlert()
-}
+  alert.value.toggleAlert();
+};
 
 onMounted(async () => {
   const res = await new SyncService().getHistory(route.params.name.toString());
   runs.value = res.runs;
 
-  await fetchOutput(runs.value)
+  await fetchOutput(runs.value);
 });
 </script>
 
 <template>
-  <q-card>
-    <div>
-      <div class="row">
-        <div class="col">
-          <div class="float-left q-ma-lg">
-            <div class="text-h6" v-if="$route.params.name">
-              {{ $route.params.name.toString() }}
-            </div>
-          </div>
-          <div class="float-right q-mt-lg q-mr-lg">
-            <q-btn class="q-mx-md" @click="confirmRequest"> Sync Request </q-btn>
-          </div>
+  <div class="row">
+    <div class="col col-12">
+      <div class="float-left q-ma-lg">
+        <div class="text-h6" v-if="$route.params.name">
+          {{ $route.params.name.toString() }}
         </div>
       </div>
-      <TableList
-        title="Runs"
-        :rows="runs"
-        :columns="headers"
-        :output="true"
-        row-key="name"
-      ></TableList>
     </div>
-    <Alert ref="alert"/>
-  </q-card>
+    <div class="col col-12">
+      <div :class="$q.screen.lt.md ? '' : 'float-right q-mt-lg q-mr-lg'">
+        <q-btn :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'" @click="confirmRequest"> Sync Request </q-btn>
+      </div>
+    </div>
+  </div>
+  <TableList
+    title="Runs"
+    :rows="runs"
+    :columns="headers"
+    :output="true"
+    row-key="name"
+  ></TableList>
+  <Alert ref="alert" />
 </template>

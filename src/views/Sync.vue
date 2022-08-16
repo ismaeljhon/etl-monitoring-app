@@ -25,6 +25,12 @@ const headers = [
     sortable: true,
   },
   {
+    name: "using_sdk",
+    align: "center",
+    label: "SDK",
+    field: "using_sdk",
+  },
+  {
     name: "run_command",
     align: "center",
     label: "Run Command",
@@ -40,37 +46,23 @@ const webjobs = ref<WebJob[]>([]);
 const refreshTable = async () => {
   webjobs.value = await new SyncService().getList({ refresh: true });
 };
-
 </script>
 
 <template>
-  <q-card>
-    <div>
-      <div class="row">
-        <div class="col">
-          <div class="float-left q-ma-lg">
-            <!-- <div class="text-h6" v-if="$route.params.code">
-              {{ capitalize($route.params.code.toString()) }}
-            </div> -->
-          </div>
-          <div class="float-right q-mt-lg q-mr-lg">
-            
-            <q-btn type="primary" @click="refreshTable">Refresh</q-btn>
-            <q-btn class="q-mx-md" @click=""> Sync Request </q-btn>
-            <!-- <Modal
-              :type="'sync'"
-              :todo="'request'"
-            /> -->
-          </div>
+  <div>
+    <div class="row">
+      <div class="col">
+        <div class="float-right q-pa-md">
+          <q-btn type="primary" @click="refreshTable">Refresh</q-btn>
         </div>
       </div>
-      <TableList
-        title="Sync WebJobs"
-        :rows="webjobs"
-        :columns="headers"
-        :has-actions="true"
-        row-key="name"
-      ></TableList>
     </div>
-  </q-card>
+    <TableList
+      title="Sync WebJobs"
+      :rows="webjobs"
+      :columns="headers"
+      :has-actions="true"
+      row-key="name"
+    ></TableList>
+  </div>
 </template>
