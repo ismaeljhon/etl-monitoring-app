@@ -68,9 +68,8 @@ const refreshTable = async () => {
         title="Sync WebJobs"
         :rows="webjobs"
         :columns="headers"
-        :refresh="false"
-        :search="true"
-        :pagination="true"
+        :has-actions="true"
+        row-key="name"
       ></TableList>
     </div>
   </q-card>

@@ -4,6 +4,7 @@ import type { RouteRecordRaw } from "vue-router";
 import Home from "./views/Home.vue";
 import Etl from "./views/Etl.vue";
 import Sync from "./views/Sync.vue"
+import CompanySync from "./views/CompanySync.vue";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -17,6 +18,10 @@ export const routes: RouteRecordRaw[] = [
   {
     path: "/sync",
     component: Sync,
+  },
+  {
+    path: "/sync/:name",
+    component: CompanySync,
   },
 ];
 

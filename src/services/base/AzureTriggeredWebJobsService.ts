@@ -50,10 +50,18 @@ export default abstract class AzureTriggeredWebJobsService<
       .then((res) => res.data);
   }
 
-  async getHistory(name: string): Promise<Entity> {
+  async getHistory(name: string) {
     return super
       .request({
         url: `${this.prefix}/${name}/history`,
+      })
+      .then((res) => res.data);
+  }
+
+  async getOutput(url: string) {
+    return super
+      .request({
+        url: url,
       })
       .then((res) => res.data);
   }

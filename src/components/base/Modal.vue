@@ -1,21 +1,35 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
-    <q-btn @click="modal = true">
-      {{ `${type} ${todo}` }}
-    </q-btn>
-    <q-dialog v-model="modal" persistent>
-      <q-card>
-        <q-card-section class="row items-center">
-          <q-avatar icon="warning" color="warning" text-color="white" />
-          <span class="q-ml-sm"
-            >{{ `You are about to trigger ${type?.toUpperCase()} for company ${code?.toUpperCase()}.` }} </span
-          >
+  <div class="">
+    <q-dialog
+      v-model="modal"
+      persistent
+      :maximized="maximized"
+      transition-show="slide-up"
+      transition-hide="slide-down"
+    >
+      <q-card class="bg-primary text-white">
+        <q-bar>
+          <q-space />
+
+          <q-btn dense flat icon="crop_square" @click="toggleMaximized">
+            <q-tooltip v-if="!maximized" class="bg-white text-primary"
+              >Maximize</q-tooltip
+            >
+          </q-btn>
+          <q-btn dense flat icon="close" v-close-popup>
+            <q-tooltip class="bg-white text-primary">Close</q-tooltip>
+          </q-btn>
+        </q-bar>
+
+        <q-card-section>
+          <div class="text-h6">Logs</div>
         </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Continue" color="primary" @click="executeClick" v-close-popup />
-        </q-card-actions>
+        <q-card-section class="q-pt-none">
+          <pre>
+            {{ item }}
+          </pre>
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -23,32 +37,43 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import moment from "moment";
-import SyncService from '../../services/SyncService'
-
-import { capitalize } from "../../utils/utils";
 
 interface Props {
-  type?: string;
-  todo: string;
-  code?: string;
+  content?: string;
 }
 const props = defineProps<Props>();
 const modal = ref(false);
-
-const buildParam = () => {
-  const time = moment().format('HH:MM')
-    .toString()
-    .replace(':','')
-  return `${time}-${props.code}-${props.type?.toUpperCase()}`
-}
-
-const executeClick = async () => {
-  if (props.type === 'sync') {
-    const name = buildParam()
-    // const apiservice = await new SyncService().trigger(name)
-    // console.log(apiservice)
-    console.log(name)
+const maximized = ref(false);
+const item = ref();
+const toggle = (text) => {
+  item.value = modifyText(text.toString());
+  if (modal.value) {
+    modal.value = false;
+  } else {
+    modal.value = true;
   }
-}
+};
+
+const toggleMaximized = () => {
+  if (maximized.value) {
+    maximized.value = false;
+  } else {
+    maximized.value = true;
+  }
+};
+
+const modifyText = (text) => {
+  const mod = text.replace(/\[(.+?)\]/g, '')
+  return mod
+};
+
+defineExpose({
+  toggle,
+});
 </script>
+
+<style>
+pre {
+  white-space: pre-line;
+}
+</style>

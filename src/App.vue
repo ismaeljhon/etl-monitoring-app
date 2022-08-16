@@ -1,17 +1,17 @@
 <template>
   <div>
-    <q-layout view="lHh lpr lFf" >
+    <q-layout view="lHh lpr lFf">
       <q-header elevated>
         <q-toolbar>
           <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
           </q-avatar>
+          
+          <q-toolbar-title> ETL Monitoring App </q-toolbar-title>
 
-          <q-toolbar-title>
-            ETL Monitoring App
-          </q-toolbar-title>
-
-          <q-btn flat round dense icon="whatshot" />
+          <router-link to="/sync" custom v-slot:default="props">
+            <q-btn v-bind="buttonProps(props)" />
+          </router-link>
         </q-toolbar>
       </q-header>
 
@@ -34,6 +34,24 @@ const headers = [
   { value: "title", text: "Title" },
   { value: "body", text: "Body" },
 ];
+
+const buttonProps = ({ href, route, isActive, isExactActive }) => {
+  const props = {
+    color: "white",
+    noCaps: true,
+    label: `Sync`,
+    flat: true,
+    to: href,
+  };
+
+  if (isActive === true) {
+    props.color = isExactActive === true ? "yellow" : "amber-9";
+  } else {
+    props.color = "white";
+  }
+
+  return props;
+};
 
 const posts = ref<Post[]>([]);
 (async () => {
