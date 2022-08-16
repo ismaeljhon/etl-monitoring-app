@@ -9,6 +9,6 @@ export default class EtlService extends AzureTriggeredWebJobsService<WebJob> {
   async getList(opts: WebJobGetListDTO): Promise<WebJob[]> {
     return super
       .getList(opts)
-      .then((res) => res.filter((item) => item?.name.includes('ETL')));
+      .then((res) => res.filter((item) => item?.name.includes("ETL")));
   }
 }

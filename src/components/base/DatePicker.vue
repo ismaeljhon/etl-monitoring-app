@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 200px">
+  <div class="q-ma-sm">
     <q-input dense v-model="date" mask="date" :rules="['date']">
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
@@ -17,6 +17,8 @@
 </template>
 <script lang="ts" setup>
   import { ref } from "vue";
+  import moment from 'moment';
 
-  let date = ref("2019/02/01");
+  const date = ref(moment().toString())
+
 </script>

@@ -4,7 +4,8 @@ import type { RouteRecordRaw } from "vue-router";
 import Home from "./views/Home.vue";
 import Etl from "./views/Etl.vue";
 import Sync from "./views/Sync.vue"
-import CompanySync from "./views/CompanySync.vue";
+import Webjob from "./views/Webjob.vue";
+import CompanyEtl from "./views/CompanyEtl.vue";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -16,12 +17,16 @@ export const routes: RouteRecordRaw[] = [
     component: Etl,
   },
   {
+    path: "/etl/:code",
+    component: CompanyEtl,
+  },
+  {
     path: "/sync",
     component: Sync,
   },
   {
-    path: "/sync/:name",
-    component: CompanySync,
+    path: "/webjob/:name",
+    component: Webjob,
   },
 ];
 

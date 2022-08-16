@@ -10,6 +10,7 @@ import { WebJob, WebJobRun } from "../interfaces/webjob.interface";
 import SyncService from "../services/SyncService";
 import Alert from "../components/base/Alert.vue";
 
+// declarations 
 const headers = [
   {
     name: "name",
@@ -42,6 +43,7 @@ const runs = ref([]);
 const route = useRoute();
 const alert = ref();
 
+// methods
 const fetchOutput = async (runs) => {
   runs.map((run) => {
     new SyncService().getOutput(run.output_url).then((res) => {
@@ -55,6 +57,7 @@ const confirmRequest = () => {
   alert.value.toggleAlert();
 };
 
+// hooks 
 onMounted(async () => {
   const res = await new SyncService().getHistory(route.params.name.toString());
   runs.value = res.runs;
@@ -72,7 +75,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <div class="col col-12">
+    <div class="col col-12" v-if="route.params.name.toString().includes('SYNC')">
       <div :class="$q.screen.lt.md ? '' : 'float-right q-mt-lg q-mr-lg'">
         <q-btn :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'" @click="confirmRequest"> Sync Request </q-btn>
       </div>

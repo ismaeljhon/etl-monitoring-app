@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { TableColumn } from "../../interfaces/theme/table.interface";
 import Modal from "./Modal.vue";
 
+// declarations 
 interface Props {
   title?: string;
   rows: Array<Object>;
@@ -12,19 +13,29 @@ interface Props {
   output?: boolean;
   loading?: boolean;
   hasActions?: boolean;
+  company?: boolean;
 }
 const props = defineProps<Props>();
 const router = useRouter();
 const dialog = ref();
-const filter = ref('')
+const filter = ref("");
 
+// methods
 const toggleDetails = (name) => {
-  router.push(`/sync/${name}`);
+  router.push(`/webjob/${name}`);
 };
 const toggleOutput = (name) => {
   dialog.value.toggle(name);
 };
+const toggleEtl = (code) => {
+  router.push(`/etl/${code}`);
+};
 
+const toggleSync = (code) => {
+  router.push(`/webjob/0330-${code}-SYNC`);
+};
+
+// hooks
 const data = computed(() => props.rows);
 </script>
 
@@ -42,7 +53,7 @@ const data = computed(() => props.rows);
       </div>
     </div>
     <q-table
-      class="q-pa-lg"
+      class="q-pa-lg q-ma-lg"
       :title="title"
       :rows="data"
       :columns="columns"
@@ -65,13 +76,29 @@ const data = computed(() => props.rows);
           </template>
         </q-input>
       </template>
-      <template v-if="output || hasActions" v-slot:item="props">
+      <template v-if="output || hasActions || company" v-slot:item="props">
         <div
           class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
           :style="props.selected ? 'transform: scale(0.95);' : ''"
         >
           <q-card :class="props.selected ? 'bg-grey-2' : ''">
             <q-card-section>
+              <q-btn
+                v-if="company"
+                size="sm"
+                color="primary"
+                @click="toggleEtl(props.row.code)"
+              >
+                ETL
+              </q-btn>
+              <q-btn
+                v-if="company"
+                size="sm"
+                color="secondary"
+                @click="toggleEtl(props.row.code)"
+              >
+                Sync
+              </q-btn>
               <q-btn
                 v-if="hasActions"
                 size="sm"
@@ -113,6 +140,7 @@ const data = computed(() => props.rows);
           </q-th>
           <q-th v-if="hasActions" auto-width />
           <q-th v-if="output" auto-width />
+          <q-th v-if="company" auto-width />
         </q-tr>
       </template>
       <template #no-data>
@@ -152,6 +180,27 @@ const data = computed(() => props.rows);
                 @click="toggleOutput(props.row.output)"
               >
                 Output
+              </q-btn>
+            </slot>
+          </q-td>
+          <q-td v-if="company" auto-width>
+            <slot name="expandButton" v-bind="props">
+              <q-btn
+                size="sm"
+                flat
+                color="primary"
+                @click="toggleEtl(props.row.code)"
+              >
+                ETL
+              </q-btn>
+
+              <q-btn
+                size="sm"
+                flat
+                color="secondary"
+                @click="toggleSync(props.row.code)"
+              >
+                Sync
               </q-btn>
             </slot>
           </q-td>

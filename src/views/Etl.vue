@@ -7,8 +7,9 @@ import { capitalize } from "../utils/utils";
 
 import { WebJob, WebJobRun } from "../interfaces/webjob.interface";
 
-import SyncService from "../services/SyncService";
+import EtlService from "../services/EtlService";
 
+// declarations
 const headers = [
   {
     name: "name",
@@ -32,37 +33,31 @@ const headers = [
   },
 ];
 const webjobs = ref<WebJob[]>([]);
+
+// methods 
 (async () => {
-  webjobs.value = await new SyncService().getList();
+  webjobs.value = await new EtlService().getList();
   console.log(webjobs);
 })();
 
 const refreshTable = async () => {
-  webjobs.value = await new SyncService().getList({ refresh: true });
+  webjobs.value = await new EtlService().getList({ refresh: true });
 };
-
 </script>
 
 <template>
-  <q-card>
-    <div>
-      <div class="row">
-        <div class="col">
-          <div class="float-left q-ma-lg">
-          </div>
-          <div class="float-right q-mt-lg q-mr-lg">
-            
-            <q-btn type="primary" @click="refreshTable">Refresh</q-btn>
-          </div>
-        </div>
+  <div class="row">
+    <div class="col">
+      <div class="float-right q-mt-lg q-mr-lg">
+        <q-btn type="primary" @click="refreshTable">Refresh</q-btn>
       </div>
-      <TableList
-        title="ETL WebJobs"
-        :rows="webjobs"
-        :columns="headers"
-        :has-actions="true"
-        row-key="name"
-      ></TableList>
     </div>
-  </q-card>
+  </div>
+  <TableList
+    title="ETL WebJobs"
+    :rows="webjobs"
+    :columns="headers"
+    :has-actions="true"
+    row-key="name"
+  ></TableList>
 </template>
