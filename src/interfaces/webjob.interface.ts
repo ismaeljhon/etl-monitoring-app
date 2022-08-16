@@ -25,3 +25,7 @@ export interface WebJobRun {
   job_name: string;
   trigger: string;
 }
+
+export interface WebJobGetListDTO {
+  refresh?: boolean;
+}

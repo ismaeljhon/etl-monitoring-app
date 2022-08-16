@@ -1,4 +1,4 @@
-import { WebJob } from '../interfaces/webjob.interface';
+import { WebJob, WebJobGetListDTO } from '../interfaces/webjob.interface';
 import AzureTriggeredWebJobsService from './base/AzureTriggeredWebJobsService';
 
 export default class SyncService extends AzureTriggeredWebJobsService<WebJob> {
@@ -6,7 +6,7 @@ export default class SyncService extends AzureTriggeredWebJobsService<WebJob> {
     super();
   }
 
-  async getList(opts = {}): Promise<WebJob[]> {
+  async getList(opts: WebJobGetListDTO): Promise<WebJob[]> {
     return super
       .getList(opts)
       .then((res) => res.filter((item) => item?.name.includes('SYNC')));
