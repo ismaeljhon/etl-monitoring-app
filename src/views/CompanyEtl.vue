@@ -74,7 +74,7 @@ onMounted(() => {
       </div>
     </div>
     <TableList
-      :title="`${route.params.code} Webjobs`"
+      :title="`${route.params.code} ETL Webjobs`"
       :rows="webjobs"
       :columns="headers"
       :has-actions="true"
