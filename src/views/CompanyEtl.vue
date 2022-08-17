@@ -42,7 +42,6 @@ const request = ref()
 
 // methods
 const fetchRuns = async () => {
-  console.log(route.params.code);
   const res = await new EtlService().getList();
   webjobs.value = res.filter((item) =>
     item.name.includes(route.params.code.toString())
@@ -50,7 +49,7 @@ const fetchRuns = async () => {
 };
 
 const openRequest = () => {
-  request.value.toggleRequest(route.params.code)
+  request.value.toggleRequest(route.params.company_code)
 }
 
 // hooks
@@ -74,7 +73,7 @@ onMounted(() => {
       </div>
     </div>
     <TableList
-      :title="`${route.params.code} ETL Webjobs`"
+      :title="`${route.params.company_code} ETL Webjobs`"
       :rows="webjobs"
       :columns="headers"
       :has-actions="true"

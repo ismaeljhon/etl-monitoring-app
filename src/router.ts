@@ -2,10 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
 import Home from "./views/Home.vue";
-import Etl from "./views/Etl.vue";
-import Sync from "./views/Sync.vue"
 import Webjob from "./views/Webjob.vue";
 import CompanyEtl from "./views/CompanyEtl.vue";
+import CompanySync from "./views/CompanySync.vue";
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -13,16 +12,12 @@ export const routes: RouteRecordRaw[] = [
     component: Home,
   },
   {
-    path: "/etl",
-    component: Etl,
-  },
-  {
-    path: "/etl/:code",
+    path: "/companies/:company_code/webjobs/etl",
     component: CompanyEtl,
   },
   {
-    path: "/sync",
-    component: Sync,
+    path: "/companies/:company_code/webjobs/sync",
+    component: CompanySync,
   },
   {
     path: "/webjob/:name",

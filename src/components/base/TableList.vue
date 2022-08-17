@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import { TableColumn } from "../../interfaces/theme/table.interface";
 import Modal from "./Modal.vue";
 
-// declarations 
+// declarations
 interface Props {
   title?: string;
   rows: Array<Object>;
@@ -19,21 +19,6 @@ const props = defineProps<Props>();
 const router = useRouter();
 const dialog = ref();
 const filter = ref("");
-
-// methods
-const toggleDetails = (name) => {
-  router.push(`/webjob/${name}`);
-};
-const toggleOutput = (name) => {
-  dialog.value.toggle(name);
-};
-const toggleEtl = (code) => {
-  router.push(`/etl/${code}`);
-};
-
-const toggleSync = (code) => {
-  router.push(`/webjob/0330-${code}-SYNC`);
-};
 
 // hooks
 const data = computed(() => props.rows);
@@ -76,49 +61,21 @@ const data = computed(() => props.rows);
           </template>
         </q-input>
       </template>
-      <template v-if="output || hasActions || company" v-slot:item="props">
+      <template v-slot:item="props">
         <div
           class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
           :style="props.selected ? 'transform: scale(0.95);' : ''"
         >
           <q-card :class="props.selected ? 'bg-grey-2' : ''">
             <q-card-section>
-              <q-btn
-                v-if="company"
-                class="q-mx-sm"
-                size="sm"
-                color="primary"
-                @click="toggleEtl(props.row.code)"
+              <slot
+                v-for="col in props.cols"
+                :name="col.name"
+                :obj="props.row"
+                v-bind="props"
               >
-                ETL
-              </q-btn>
-              <q-btn
-                v-if="company"
-                class="q-mx-sm"
-                size="sm"
-                color="secondary"
-                @click="toggleSync(props.row.code)"
-              >
-                Sync
-              </q-btn>
-              <q-btn
-                v-if="hasActions"
-                class="q-mx-sm"
-                size="sm"
-                color="primary"
-                @click="toggleDetails(props.row.name)"
-              >
-                Details
-              </q-btn>
-              <q-btn
-                v-if="output"
-                class="q-mx-sm"
-                size="sm"
-                color="secondary"
-                @click="toggleOutput(props.row.output)"
-              >
-                Output
-              </q-btn>
+                {{ col.action ? col.value : ''  }}
+              </slot>
             </q-card-section>
             <q-separator />
             <q-list dense>
@@ -142,9 +99,6 @@ const data = computed(() => props.rows);
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
             {{ col.label }}
           </q-th>
-          <q-th v-if="hasActions" auto-width />
-          <q-th v-if="output" auto-width />
-          <q-th v-if="company" auto-width />
         </q-tr>
       </template>
       <template #no-data>
@@ -159,58 +113,12 @@ const data = computed(() => props.rows);
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td v-for="col in props.cols" :key="col.name" :props="props">
-            <slot :name="col.name" v-bind="props">
+            <slot :name="col.name" :obj="props.row" v-bind="props">
               {{ col.value }}
-            </slot>
-          </q-td>
-          <q-td v-if="hasActions" auto-width>
-            <slot name="expandButton" v-bind="props">
-              <q-btn
-                size="sm"
-                flat
-                color="primary"
-                @click="toggleDetails(props.row.name)"
-              >
-                Details
-              </q-btn>
-            </slot>
-          </q-td>
-          <q-td v-if="output" auto-width>
-            <slot name="expandButton" v-bind="props">
-              <q-btn
-                size="sm"
-                flat
-                color="secondary"
-                @click="toggleOutput(props.row.output)"
-              >
-                Output
-              </q-btn>
-            </slot>
-          </q-td>
-          <q-td v-if="company" auto-width>
-            <slot name="expandButton" v-bind="props">
-              <q-btn
-                size="sm"
-                flat
-                color="primary"
-                @click="toggleEtl(props.row.code)"
-              >
-                ETL
-              </q-btn>
-
-              <q-btn
-                size="sm"
-                flat
-                color="secondary"
-                @click="toggleSync(props.row.code)"
-              >
-                Sync
-              </q-btn>
             </slot>
           </q-td>
         </q-tr>
       </template>
     </q-table>
-    <Modal ref="dialog" :maximized="true" />
   </div>
 </template>

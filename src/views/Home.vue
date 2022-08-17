@@ -1,25 +1,8 @@
-<template>
-  <div>
-    <div class="row">
-      <div class="col">
-        <TableList
-          title="Companies"
-          :rows="companies"
-          :columns="columns"
-          :company="true"
-          row-key="name"
-        ></TableList>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col"></div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import TableList from "../components/base/TableList.vue";
 import CompanyService from "../services/CompanyService";
+import { useRouter } from "vue-router";
+import { useQuasar } from "quasar";
 
 const columns = [
   {
@@ -27,16 +10,13 @@ const columns = [
     align: "center",
     label: "Name",
     field: "name",
-    style: "width: 100px",
     sortable: true,
-    
   },
   {
     name: "code",
     align: "center",
     label: "Code",
     field: "code",
-    style: "width: 100px",
     sortable: true,
   },
   {
@@ -44,11 +24,17 @@ const columns = [
     align: "center",
     label: "Status",
     field: "status",
-    style: "width: 100px",
     sortable: true,
   },
+  {
+    name: "actions",
+    align: "center",
+    label: "Actions",
+    field: "",
+  },
 ];
-
+const router = useRouter();
+const $q = useQuasar();
 const companies = [
   {
     url: "https://cloud.detailonline.com",
@@ -467,4 +453,54 @@ const companies = [
     updated_at: "2022-07-25T03:59:11.326Z",
   },
 ];
+
+const toggle = (companyCode, action) => {
+  if (action === "etl") {
+    router.push(`/companies/${companyCode}/webjobs/etl`);
+  } else {
+    router.push(`/companies/${companyCode}/webjobs/sync`);
+  }
+};
 </script>
+
+<template>
+  <div>
+    <div class="row">
+      <div class="col">
+        <TableList
+          title="Companies"
+          :rows="companies"
+          :columns="columns"
+          row-key="name"
+        >
+          <template #status="row">
+            <q-badge :color="row.obj.status === 'ACTIVE' ? 'green' : 'red'">
+              {{ row.obj.status }}
+            </q-badge>
+          </template>
+          <template #actions="row">
+            <q-btn
+              size="sm"
+              flat
+              color="primary"
+              @click="toggle(row.obj.code, 'etl')"
+            >
+              ETL
+            </q-btn>
+            <q-btn
+              size="sm"
+              flat
+              color="secondary"
+              @click="toggle(row.obj.code, 'sync')"
+            >
+              Sync
+            </q-btn>
+          </template>
+        </TableList>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"></div>
+    </div>
+  </div>
+</template>

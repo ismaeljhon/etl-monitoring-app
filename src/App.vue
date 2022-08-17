@@ -8,7 +8,6 @@
           </q-avatar>
 
           <q-toolbar-title> ETL Monitoring App </q-toolbar-title>
-
           <router-link to="/" custom v-slot:default="props">
             <q-btn v-bind="homeProps(props)" />
           </router-link>

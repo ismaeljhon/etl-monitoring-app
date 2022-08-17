@@ -28,13 +28,18 @@ const headers = [
     label: "Run Command",
     field: "run_command",
   },
+  {
+    name: "actions",
+    align: "center",
+    label: "Actions",
+    field: "",
+  },
 ];
 const webjobs = ref<WebJob[]>([]);
 
-// methods 
+// methods
 (async () => {
   webjobs.value = await new EtlService().getList();
-  console.log(webjobs);
 })();
 
 const refreshTable = async () => {
@@ -56,5 +61,9 @@ const refreshTable = async () => {
     :columns="headers"
     :has-actions="true"
     row-key="name"
-  ></TableList>
+  >
+    <template #actions>
+      test
+    </template>
+  </TableList>
 </template>
