@@ -63,8 +63,8 @@ const toggleMaximized = () => {
 };
 
 const modifyText = (text) => {
-  const mod = text.replace(/\[(.+?)\]/g, '')
-  return mod
+  const mod = text.replace(/\[(.+?)\]/g, "");
+  return mod;
 };
 
 defineExpose({

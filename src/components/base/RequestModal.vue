@@ -9,7 +9,7 @@
         <q-separator />
 
         <q-card-section class="q-pa-lg">
-          <q-input label="Company" dense v-model="name" autofocus />
+          <q-input label="Company" dense v-model="name" readonly autofocus />
           <div class="q-ma-sm">
             <q-input dense v-model="date" mask="date" :rules="['date']">
               <template v-slot:append>
@@ -38,7 +38,40 @@
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="Cancel" v-close-popup />
-          <q-btn flat label="Request" @click="executeClick" v-close-popup />
+          <q-btn
+            flat
+            label="Request"
+            :disable="name && date ? false : true"
+            @click="secondDialog = true"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog
+      v-model="secondDialog"
+      persistent
+      transition-show="scale"
+      transition-hide="scale"
+    >
+      <q-card style="width: 300px">
+        <q-card-section>
+          <div class="row">
+            <div class="text-h6 q-mr-auto">Alert</div>
+            <q-avatar icon="warning" color="teal" text-color="white" />
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <span class="q-ma-none"
+            >{{
+              `You are about to trigger ETL for ${name} with the date ${date}`
+            }}
+          </span>
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="OK" @click="executeClick" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -47,6 +80,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import Alert from "./Alert.vue";
 
 // declarations
 interface Props {
@@ -57,6 +91,7 @@ const props = defineProps<Props>();
 const modal = ref(false);
 const date = ref("");
 const name = ref("");
+const secondDialog = ref(false);
 
 // methods
 const executeClick = async () => {

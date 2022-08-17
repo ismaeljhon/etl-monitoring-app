@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
-import BaseButton from "../components/base/Button.vue";
+import { ref } from "vue";
 import TableList from "../components/base/TableList.vue";
-import Modal from "../components/base/Modal.vue";
-import { capitalize } from "../utils/utils";
 
-import { WebJob, WebJobRun } from "../interfaces/webjob.interface";
+import { WebJob } from "../interfaces/webjob.interface";
 
 import SyncService from "../services/SyncService";
 
