@@ -85,6 +85,7 @@ const data = computed(() => props.rows);
             <q-card-section>
               <q-btn
                 v-if="company"
+                class="q-mx-sm"
                 size="sm"
                 color="primary"
                 @click="toggleEtl(props.row.code)"
@@ -93,14 +94,16 @@ const data = computed(() => props.rows);
               </q-btn>
               <q-btn
                 v-if="company"
+                class="q-mx-sm"
                 size="sm"
                 color="secondary"
-                @click="toggleEtl(props.row.code)"
+                @click="toggleSync(props.row.code)"
               >
                 Sync
               </q-btn>
               <q-btn
                 v-if="hasActions"
+                class="q-mx-sm"
                 size="sm"
                 color="primary"
                 @click="toggleDetails(props.row.name)"
@@ -109,6 +112,7 @@ const data = computed(() => props.rows);
               </q-btn>
               <q-btn
                 v-if="output"
+                class="q-mx-sm"
                 size="sm"
                 color="secondary"
                 @click="toggleOutput(props.row.output)"

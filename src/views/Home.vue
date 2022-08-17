@@ -7,6 +7,7 @@
           :rows="companies"
           :columns="columns"
           :company="true"
+          row-key="name"
         ></TableList>
       </div>
     </div>

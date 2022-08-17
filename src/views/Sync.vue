@@ -37,7 +37,6 @@ const headers = [
 const webjobs = ref<WebJob[]>([]);
 (async () => {
   webjobs.value = await new SyncService().getList();
-  console.log(webjobs);
 })();
 
 const refreshTable = async () => {
