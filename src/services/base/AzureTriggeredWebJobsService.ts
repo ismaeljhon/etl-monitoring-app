@@ -27,19 +27,20 @@ export default abstract class AzureTriggeredWebJobsService<
     /** Fetch data from API only when triggered */
     const { refresh = false } = opts;
     const localStorageWebJobs = this.localStorage.getItem('webjobs');
+    let data = JSON.parse(localStorageWebJobs || '[]');
 
-    if (!localStorageWebJobs && !refresh)
-      return super
-        .request({
-          url: this.prefix,
-        })
-        .then((res) => {
-          const { data = [] } = res;
-          this.localStorage.setItem('webjobs', JSON.stringify(data));
-          return data;
-        });
+    if (!data || refresh) {
+      const { data: resData = [] } = await super.request({
+        url: this.prefix,
+      });
 
-    return JSON.parse(localStorageWebJobs || '[]');
+      /** Save the fetched data to localstorage to be reusable for other services */
+      this.localStorage.setItem('webjobs', JSON.stringify(resData));
+
+      data = resData;
+    }
+
+    return data;
   }
 
   async get(name: string): Promise<Entity> {
