@@ -28,4 +28,5 @@ export interface WebJobRun {
 
 export interface WebJobGetListDTO {
   refresh?: boolean;
+  company_code?: string;
 }
