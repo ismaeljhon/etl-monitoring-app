@@ -2,7 +2,7 @@ export default class LocalStorageService {
   constructor() {}
 
   getItem(key: string): string {
-    console.log(`Getting ${key} to localstorage`);
+    console.log(`Getting ${key} from localstorage`);
     return localStorage.getItem(key) || "";
   }
 
