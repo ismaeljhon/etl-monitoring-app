@@ -29,7 +29,7 @@ export default abstract class AzureTriggeredWebJobsService<
     const localStorageWebJobs = this.localStorage.getItem('webjobs');
     let data = JSON.parse(localStorageWebJobs || '[]');
 
-    if (!data || refresh) {
+    if (!data.length || refresh) {
       const { data: resData = [] } = await super.request({
         url: this.prefix,
       });
