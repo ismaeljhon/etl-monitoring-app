@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useRouter } from "vue-router";
+import { computed, reactive, ref } from "vue";
 import { TableColumn } from "../../interfaces/theme/table.interface";
-import Modal from "./Modal.vue";
 
 // declarations
 interface Props {
@@ -16,12 +14,13 @@ interface Props {
   company?: boolean;
 }
 const props = defineProps<Props>();
-const router = useRouter();
-const dialog = ref();
-const filter = ref("");
+const filter = reactive({
+  search: ""
+});
 
 // hooks
 const data = computed(() => props.rows);
+
 </script>
 
 <template>
@@ -34,55 +33,32 @@ const data = computed(() => props.rows);
         <slot name="top-middle">&nbsp;</slot>
       </div>
       <div class="col col-md-4">
-        <slot name="top-right">&nbsp;</slot>
+        <slot name="top-right">
+          <q-btn type="primary" @click="$emit('refresh', filter)" class="float-right">Refresh</q-btn>
+        </slot>
       </div>
     </div>
-    <q-table
-      class="q-pa-lg q-ma-lg"
-      :title="title"
-      :rows="data"
-      :columns="columns"
-      :row-key="rowKey"
-      :grid="$q.screen.lt.md"
-      :loading="loading"
-      :filter="filter"
-      wrap-cells
-    >
+    <q-table class="q-pt-lg q-mt-lg" :title="title" :rows="data" :columns="columns" :row-key="rowKey"
+      :grid="$q.screen.lt.md" :loading="loading" :filter="filter.search" wrap-cells>
       <template v-slot:top-right>
-        <q-input
-          outlined
-          dense
-          debounce="300"
-          v-model="filter"
-          placeholder="Search"
-        >
+        <q-input outlined dense debounce="300" v-model="filter.search" placeholder="Search">
           <template v-slot:append>
             <q-icon name="search" />
           </template>
         </q-input>
       </template>
       <template v-slot:item="props">
-        <div
-          class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
-          :style="props.selected ? 'transform: scale(0.95);' : ''"
-        >
+        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
+          :style="props.selected ? 'transform: scale(0.95);' : ''">
           <q-card :class="props.selected ? 'bg-grey-2' : ''">
             <q-card-section>
-              <slot
-                v-for="col in props.cols"
-                :name="col.name"
-                :obj="props.row"
-                v-bind="props"
-              >
-                {{ col.action ? col.value : ''  }}
+              <slot v-for="col in props.cols" :name="col.name" :obj="props.row" v-bind="props">
+                {{ col.action ? col.value : '' }}
               </slot>
             </q-card-section>
             <q-separator />
             <q-list dense>
-              <q-item
-                v-for="col in props.cols.filter((col) => col.name !== 'desc')"
-                :key="col.name"
-              >
+              <q-item v-for="col in props.cols.filter((col) => col.name !== 'desc')" :key="col.name">
                 <q-item-section>
                   <q-item-label>{{ col.label }}</q-item-label>
                 </q-item-section>
