@@ -1,27 +1,22 @@
-import { createRouter, createWebHistory } from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
-
-import Home from "./views/Home.vue";
-import SyncWebjob from "./views/SyncWebjob.vue";
-import CompanyEtl from "./views/CompanyEtl.vue";
-import CompanySync from "./views/CompanySync.vue";
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
 
 export const routes: RouteRecordRaw[] = [
   {
-    path: "/",
-    component: Home,
+    path: '/',
+    component: () => import('./views/Home.vue'),
   },
   {
-    path: "/companies/:company_code/webjobs/etl",
-    component: CompanyEtl,
+    path: '/companies/:company_code/webjobs/etl',
+    component: () => import('./views/companies/webjobs/EtlList.vue'),
   },
   {
-    path: "/companies/:company_code/webjobs/sync",
-    component: CompanySync,
+    path: '/companies/:company_code/webjobs/sync',
+    component: () => import('./views/companies/webjobs/SyncList.vue'),
   },
   {
-    path: "/companies/:company_code/webjobs/sync/:name",
-    component: SyncWebjob,
+    path: '/companies/:company_code/webjobs/sync/:webjob_name',
+    component: () => import('./views/companies/webjobs/SyncWebJobHistory.vue'),
   },
 ];
 
