@@ -8,7 +8,6 @@ interface Props {
   rows: Array<Object>;
   columns: Array<TableColumn>;
   rowKey: string;
-  output?: boolean;
   loading?: boolean;
   hasActions?: boolean;
   company?: boolean;
@@ -38,7 +37,7 @@ const data = computed(() => props.rows);
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn type="primary" @click="$emit('refresh', filter)" class="float-right q-ml-sm">Refresh</q-btn>
+          <q-btn color="primary" outline icon="sync" @click="$emit('refresh', filter)" class="float-right q-ml-sm">Refresh</q-btn>
         </slot>
       </template>
       <template v-slot:header="props">
