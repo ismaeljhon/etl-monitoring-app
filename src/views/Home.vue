@@ -5,8 +5,10 @@ import { companyColumns } from '../composables/TableColumns'
 import companiesJson from '../assets/companies.json'
 import { Company } from "../interfaces/company.interface";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const companies = ref<Company[]>(companiesJson)
+const router = useRouter()
 </script>
 
 <template>
@@ -20,10 +22,10 @@ const companies = ref<Company[]>(companiesJson)
             </q-badge>
           </template>
           <template #actions="{ row }">
-            <q-btn size="sm" flat color="primary" :href="`/companies/${row.code}/webjobs/etl`">
+            <q-btn size="sm" flat color="primary" @click.prevent="router.push(`companies/${row.code}/webjobs/etl`)">
               ETL
             </q-btn>
-            <q-btn size="sm" flat color="secondary" :href="`/companies/${row.code}/webjobs/sync`">
+            <q-btn size="sm" flat color="secondary" @click.prevent="router.push(`companies/${row.code}/webjobs/sync`)">
               Sync
             </q-btn>
           </template>
