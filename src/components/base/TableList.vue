@@ -41,29 +41,6 @@ const data = computed(() => props.rows);
           <q-btn type="primary" @click="$emit('refresh', filter)" class="float-right q-ml-sm">Refresh</q-btn>
         </slot>
       </template>
-      <template v-slot:item="props">
-        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
-          :style="props.selected ? 'transform: scale(0.95);' : ''">
-          <q-card :class="props.selected ? 'bg-grey-2' : ''">
-            <q-card-section>
-              <slot v-for="col in props.cols" :name="col.name" :obj="props.row" v-bind="props">
-                {{ col.action ? col.value : '' }}
-              </slot>
-            </q-card-section>
-            <q-separator />
-            <q-list dense>
-              <q-item v-for="col in props.cols.filter((col) => col.name !== 'desc')" :key="col.name">
-                <q-item-section>
-                  <q-item-label>{{ col.label }}</q-item-label>
-                </q-item-section>
-                <q-item-section side>
-                  <q-item-label caption>{{ col.value }}</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-card>
-        </div>
-      </template>
       <template v-slot:header="props">
         <q-tr :props="props">
           <q-th v-for="col in props.cols" :key="col.name" :props="props">
