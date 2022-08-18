@@ -20,32 +20,26 @@ const filter = reactive({
 
 // hooks
 const data = computed(() => props.rows);
-
 </script>
 
 <template>
   <div class="q-pt-5">
-    <div class="row q-mb-xs">
-      <div class="col col-md-4">
-        <slot name="top-left">&nbsp;</slot>
-      </div>
-      <div class="col col-md-4">
-        <slot name="top-middle">&nbsp;</slot>
-      </div>
-      <div class="col col-md-4">
-        <slot name="top-right">
-          <q-btn type="primary" @click="$emit('refresh', filter)" class="float-right">Refresh</q-btn>
+    <q-table class="q-pt-lg" :rows="data" :columns="columns" :row-key="rowKey" :grid="$q.screen.lt.md"
+      :loading="loading" :filter="filter.search" wrap-cells>
+      <template #top-left>
+        <slot name="top-left">
+          <div class="q-table__title" v-text="title"></div>
         </slot>
-      </div>
-    </div>
-    <q-table class="q-pt-lg q-mt-lg" :title="title" :rows="data" :columns="columns" :row-key="rowKey"
-      :grid="$q.screen.lt.md" :loading="loading" :filter="filter.search" wrap-cells>
-      <template v-slot:top-right>
-        <q-input outlined dense debounce="300" v-model="filter.search" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
+      </template>
+      <template #top-right>
+        <slot name="top-right">
+          <q-input outlined dense debounce="300" v-model="filter.search" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+          <q-btn type="primary" @click="$emit('refresh', filter)" class="float-right q-ml-sm">Refresh</q-btn>
+        </slot>
       </template>
       <template v-slot:item="props">
         <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 col-lg-3 grid-style-transition"
