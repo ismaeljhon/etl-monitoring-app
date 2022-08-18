@@ -1,4 +1,4 @@
-import { WebJobGetListDTO } from '../../interfaces/webjob.interface';
+import { WebJobGetListDTO, WebJobRun } from '../../interfaces/webjob.interface';
 import LocalStorageService from '../LocalStorageService';
 import ApiService from './ApiService';
 
@@ -51,12 +51,12 @@ export default abstract class AzureTriggeredWebJobsService<
       .then((res) => res.data);
   }
 
-  async getHistory(name: string) {
+  async getHistory(name: string): Promise<WebJobRun[]> {
     return super
       .request({
         url: `${this.prefix}/${name}/history`,
       })
-      .then((res) => res.data);
+      .then((res) => res.data.runs);
   }
 
   async getOutput(url: string) {
@@ -75,4 +75,6 @@ export default abstract class AzureTriggeredWebJobsService<
       })
       .then((res) => res.data);
   }
+
+  async getLatestRun() {}
 }
