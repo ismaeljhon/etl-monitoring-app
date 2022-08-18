@@ -81,17 +81,12 @@ onMounted(async () => {
 <template>
   <div class="row">
     <div class="col col-12">
-      <div class="float-left q-ma-lg">
+      <div class="q-ma-lg float-left">
         <div class="text-h6" v-if="$route.params.name">
           {{ $route.params.name.toString() }}
         </div>
       </div>
-    </div>
-    <div
-      class="col col-12"
-      v-if="route.params.name.toString().includes('SYNC')"
-    >
-      <div :class="$q.screen.lt.md ? '' : 'float-right q-mt-lg q-mr-lg'">
+      <div class="q-mt-lg float-right">
         <q-btn
           :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'"
           @click="confirmRequest"
@@ -102,6 +97,7 @@ onMounted(async () => {
     </div>
   </div>
   <TableList
+    class="q-ma-md"
     title="Runs"
     :rows="runs"
     :columns="headers"

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
 import Home from "./views/Home.vue";
-import Webjob from "./views/Webjob.vue";
+import SyncWebjob from "./views/SyncWebjob.vue";
 import CompanyEtl from "./views/CompanyEtl.vue";
 import CompanySync from "./views/CompanySync.vue";
 
@@ -20,8 +20,8 @@ export const routes: RouteRecordRaw[] = [
     component: CompanySync,
   },
   {
-    path: "/webjob/:name",
-    component: Webjob,
+    path: "/companies/:company_code/webjobs/sync/:name",
+    component: SyncWebjob,
   },
 ];
 
