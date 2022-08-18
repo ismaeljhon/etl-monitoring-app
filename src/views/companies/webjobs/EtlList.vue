@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import TableList from "../components/base/TableList.vue";
-import RequestModal from "../components/base/RequestModal.vue";
-import EtlService from "../services/EtlService";
-import { WebJob } from "../interfaces/webjob.interface";
+import TableList from "../../../components/base/TableList.vue";
+import RequestModal from "../../../components/base/RequestModal.vue";
+import EtlService from "../../../services/EtlService";
+import { WebJob } from "../../../interfaces/webjob.interface";
 
 const headers = [
   {
@@ -63,22 +63,14 @@ onMounted(() => {
     <div class="row">
       <div class="col col-12">
         <div :class="$q.screen.lt.md ? '' : 'float-right q-mt-lg q-mr-lg'">
-          <q-btn
-            :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'"
-            @click="openRequest"
-          >
+          <q-btn :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'" @click="openRequest">
             ETL Request
           </q-btn>
         </div>
       </div>
     </div>
-    <TableList
-      :title="`${route.params.company_code} ETL Webjobs`"
-      :rows="webjobs"
-      :columns="headers"
-      :has-actions="true"
-      row-key="name"
-    ></TableList>
-    <RequestModal ref="request"/>
+    <TableList :title="`${route.params.company_code} ETL Webjobs`" :rows="webjobs" :columns="headers"
+      :has-actions="true" row-key="name"></TableList>
+    <RequestModal ref="request" />
   </div>
 </template>

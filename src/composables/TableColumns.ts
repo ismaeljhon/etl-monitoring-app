@@ -67,3 +67,38 @@ export const companySyncColumns = ref<TableColumn[]>([
     field: '',
   },
 ]);
+
+export const syncListColumns = ref<TableColumn[]>([
+  {
+    name: 'name',
+    align: 'center',
+    label: 'Name',
+    field: 'name',
+    sortable: true,
+  },
+  {
+    name: 'start_time',
+    align: 'center',
+    label: 'Start Time',
+    field: 'start_time',
+    sortable: true,
+  },
+  {
+    name: 'end_time',
+    align: 'center',
+    label: 'End Time',
+    field: 'end_time',
+  },
+  {
+    name: 'status',
+    align: 'center',
+    label: 'Status',
+    field: 'status',
+  },
+  {
+    name: 'actions',
+    align: 'center',
+    label: 'Actions',
+    field: 'action',
+  },
+]);
