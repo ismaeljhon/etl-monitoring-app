@@ -37,7 +37,8 @@ const data = computed(() => props.rows);
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn color="primary" outline icon="sync" @click="$emit('refresh', filter)" class="float-right q-ml-sm">Refresh</q-btn>
+          <q-btn color="primary" outline icon="sync" @click="$emit('refresh', filter)" class="float-right q-ml-sm">
+            Refresh</q-btn>
         </slot>
       </template>
       <template v-slot:header="props">
@@ -46,6 +47,9 @@ const data = computed(() => props.rows);
             {{ col.label }}
           </q-th>
         </q-tr>
+      </template>
+      <template v-slot:loading>
+        <q-inner-loading showing color="primary" />
       </template>
       <template #no-data>
         <div class="full-width row flex-center text-accent q-gutter-sm">
