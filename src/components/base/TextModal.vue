@@ -37,7 +37,7 @@ defineProps<Props>()
 
       <q-card-section class="q-pt-none">
         <pre>
-          {{body}}
+          {{ body }}
         </pre>
       </q-card-section>
     </q-card>
