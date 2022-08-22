@@ -3,12 +3,21 @@ import { ref } from 'vue';
 
 const maximizedToggle = ref(true)
 interface Props {
-  show?: boolean
   title?: string
   body: string
 }
 
+const show = ref(false)
 defineProps<Props>()
+
+const closeModal = () => {
+  show.value = false
+}
+
+defineExpose({
+  show,
+  closeModal
+})
 </script>
 
 <template>
