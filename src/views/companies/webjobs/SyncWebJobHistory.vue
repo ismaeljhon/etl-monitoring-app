@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import TableList from "../../../components/base/TableList.vue";
 import Modal from "../../../components/base/Modal.vue";
 import { useRoute, useRouter } from "vue-router";
@@ -9,22 +9,33 @@ import { syncListColumns } from "../../../composables/TableColumns";
 import SyncService from "../../../services/SyncService";
 import Alert from "../../../components/base/Alert.vue";
 import { WebJobRun } from "../../../interfaces/webjob.interface";
+import TextModal from "../../../components/base/TextModal.vue";
 
 // declarations
 const runs = ref<WebJobRun[]>([]);
 const route = useRoute();
 const router = useRouter();
 const alert = ref();
-const dialog = ref();
 const outTextFileContent = ref<string>("");
 const webJobName = route.params.webjob_name.toString();
-const showOutput = async (url: string) => {
-  outTextFileContent.value = await new SyncService().getOutput(url);
+const isLoadingTable = ref(false)
+const outputModal = ref()
+const showTextModal = ref(false)
+const showOutput = async (row: WebJobRun) => {
+  outTextFileContent.value = await new SyncService().getOutput(row.output_url);
+  showTextModal.value = true
+  outputModal.value.title = `Webjob: ${row.job_name}`
 };
 
-// hooks
-onMounted(async () => {
+const getWebJobRuns = async () => {
+  isLoadingTable.value = true
   runs.value = await new SyncService().getHistory(webJobName);
+  isLoadingTable.value = false
+}
+
+// hooks
+onMounted(() => {
+  getWebJobRuns()
 });
 </script>
 
@@ -39,7 +50,8 @@ onMounted(async () => {
       </div>
     </div>
   </div>
-  <TableList class="q-ma-md" :title="`Web Job: ${webJobName}`" :rows="runs" :columns="syncListColumns" row-key="name">
+  <TableList class="q-ma-md" row-key="name" :columns="syncListColumns" :loading="isLoadingTable" :rows="runs"
+    :title="`Web Job: ${webJobName}`" @refresh="getWebJobRuns()">
     <template #start_time="{ row }">
       {{ date.formatDate(row.start_time, "MMMM D, YYYY hh:mm:ss A") }}
     </template>
@@ -47,7 +59,7 @@ onMounted(async () => {
       {{ date.formatDate(row.end_time, "MMMM D, YYYY hh:mm:ss A") }}
     </template>
     <template #actions="{ row }">
-      <q-btn size="sm" flat color="primary" @click.prevent="showOutput(row.output_url)">
+      <q-btn size="sm" flat color="primary" @click.prevent="showOutput(row)">
         View logs
       </q-btn>
     </template>
@@ -58,5 +70,5 @@ onMounted(async () => {
     </template>
   </TableList>
   <Alert ref="alert" />
-  <Modal ref="dialog" :maximized="true" />
+  <TextModal title="Webjob" ref="outputModal" :show="showTextModal" :body="outTextFileContent" />
 </template>
