@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
 import TableList from "../../../components/base/TableList.vue";
-import Modal from "../../../components/base/Modal.vue";
 import { useRoute, useRouter } from "vue-router";
-import { date } from "quasar";
 import { syncListColumns } from "../../../composables/TableColumns";
 
 import SyncService from "../../../services/SyncService";
 import Alert from "../../../components/base/Alert.vue";
 import { WebJobRun } from "../../../interfaces/webjob.interface";
 import TextModal from "../../../components/base/TextModal.vue";
+import Date from "../../../components/base/Date.vue";
 
 // declarations
 const runs = ref<WebJobRun[]>([]);
@@ -53,10 +52,10 @@ onMounted(() => {
   <TableList class="q-ma-md" row-key="name" :columns="syncListColumns" :loading="isLoadingTable" :rows="runs"
     :title="`Web Job: ${webJobName}`" @refresh="getWebJobRuns()">
     <template #start_time="{ row }">
-      {{ date.formatDate(row.start_time, "MMMM D, YYYY hh:mm:ss A") }}
+      <Date :datetime="row.start_time" format="MMMM D, YYYY hh:mm A" />
     </template>
     <template #end_time="{ row }">
-      {{ date.formatDate(row.end_time, "MMMM D, YYYY hh:mm:ss A") }}
+      <Date :datetime="row.end_time" format="MMMM D, YYYY hh:mm A" />
     </template>
     <template #actions="{ row }">
       <q-btn size="sm" flat color="primary" @click.prevent="showOutput(row)">
