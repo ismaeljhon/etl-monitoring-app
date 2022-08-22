@@ -9,6 +9,7 @@ import Alert from "../../../components/base/Alert.vue";
 import { WebJobRun } from "../../../interfaces/webjob.interface";
 import TextModal from "../../../components/base/TextModal.vue";
 import Date from "../../../components/base/Date.vue";
+import RequestModal from "../../../components/base/RequestModal.vue";
 
 // declarations
 const runs = ref<WebJobRun[]>([]);
@@ -17,13 +18,12 @@ const router = useRouter();
 const alert = ref();
 const outTextFileContent = ref<string>("");
 const webJobName = route.params.webjob_name.toString();
+const companyCode = route.params.company_code
 const isLoadingTable = ref(false)
 const outputModal = ref()
-const showTextModal = ref(false)
 const showOutput = async (row: WebJobRun) => {
   outTextFileContent.value = await new SyncService().getOutput(row.output_url);
-  showTextModal.value = true
-  outputModal.value.title = `Webjob: ${row.job_name}`
+  outputModal.value.show = true
 };
 
 const getWebJobRuns = async () => {
@@ -32,10 +32,21 @@ const getWebJobRuns = async () => {
   isLoadingTable.value = false
 }
 
+const requestModal = ref()
+const isLoadingRequest = ref(false)
+
+const triggerSyncRequest = async () => {
+  isLoadingRequest.value = true
+  await new SyncService().trigger(webJobName)
+  isLoadingRequest.value = false
+  requestModal.value.closeModal()
+}
+
 // hooks
 onMounted(() => {
   getWebJobRuns()
 });
+
 </script>
 
 <template>
@@ -45,7 +56,9 @@ onMounted(() => {
         <q-btn icon="keyboard_double_arrow_left" @click.prevent="router.push({ name: 'SyncList' })">Back To list</q-btn>
       </div>
       <div class="q-mt-lg float-right">
-        <q-btn color="primary" icon="add" :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'"> Sync Request </q-btn>
+        <q-btn color="primary" icon="add" :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'"
+          @click="requestModal.show = true">
+          Sync Request </q-btn>
       </div>
     </div>
   </div>
@@ -69,5 +82,14 @@ onMounted(() => {
     </template>
   </TableList>
   <Alert ref="alert" />
-  <TextModal title="Webjob" ref="outputModal" :show="showTextModal" :body="outTextFileContent" />
+  <TextModal :title="`Webjob: ${webJobName}`" ref="outputModal" :show="showTextModal" :body="outTextFileContent" />
+  <RequestModal type="sync" ref="requestModal">
+    <template #body-text>
+      Are you sure you want to trigger sync for company: {{ companyCode }}?
+    </template>
+    <template #footer-btns>
+      <q-btn label="Cancel" v-close-popup v-show="!isLoadingRequest" />
+      <q-btn color="primary" label="Confirm" @click.prevent="triggerSyncRequest" :loading="isLoadingRequest" />
+    </template>
+  </RequestModal>
 </template>
