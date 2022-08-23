@@ -10,7 +10,7 @@
               />
             </q-avatar>
 
-            <q-toolbar-title> ETL Monitoring App </q-toolbar-title>
+            <q-toolbar-title> ETL - Sync Monitoring </q-toolbar-title>
           </q-btn>
         </q-toolbar>
       </q-header>
