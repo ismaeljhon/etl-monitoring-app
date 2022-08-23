@@ -28,7 +28,11 @@ const showOutput = async (row: WebJobRun) => {
 
 const getWebJobRuns = async () => {
   isLoadingTable.value = true
-  runs.value = await new SyncService().getHistory(webJobName);
+  try {
+    runs.value = await new SyncService().getHistory(webJobName);
+  } catch (e) {
+    console.log(e)
+  }
   isLoadingTable.value = false
 }
 
@@ -68,10 +72,10 @@ onMounted(() => {
       <Date :datetime="row.start_time" />
     </template>
     <template #end_time="{ row }">
-      <Date :datetime="row.end_time" v-if="row.end_time !== '0001-01-01T00:00:00'"/>
+      <Date :datetime="row.end_time" />
     </template>
     <template #actions="{ row }">
-      <q-btn size="sm" flat color="primary" @click.prevent="showOutput(row)">
+      <q-btn size="sm" flat color="info" @click.prevent="showOutput(row)">
         View logs
       </q-btn>
     </template>
