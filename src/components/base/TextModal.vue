@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const maximizedToggle = ref(true);
+const maximizedToggle = ref(false);
 interface Props {
   title?: string;
   body: string;
   persistent?: boolean;
+  isMaximizable?: boolean;
 }
 
 const show = ref(false);
-withDefaults(defineProps<Props>(), { persistent: false, title: "" });
+withDefaults(defineProps<Props>(), {
+  persistent: false,
+  title: "",
+  isMaximizable: false,
+});
 
 const closeModal = () => {
   show.value = false;
@@ -23,18 +28,22 @@ defineExpose({
 
 <template>
   <q-dialog
+    class="dialog"
     v-model="show"
     :persistent="persistent"
     :maximized="maximizedToggle"
     transition-show="slide-up"
     @hide="$emit('close')"
     transition-hide="slide-down"
+    full-height
+    full-width
   >
     <q-card>
       <q-bar>
         <q-space />
 
         <q-btn
+          v-if="isMaximizable"
           dense
           flat
           icon="minimize"
@@ -46,6 +55,7 @@ defineExpose({
           >
         </q-btn>
         <q-btn
+          v-if="isMaximizable"
           dense
           flat
           icon="crop_square"
