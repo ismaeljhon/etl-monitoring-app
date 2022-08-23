@@ -65,10 +65,10 @@ onMounted(() => {
   <TableList class="q-ma-md" row-key="name" :columns="syncListColumns" :loading="isLoadingTable" :rows="runs"
     :title="`Web Job: ${webJobName}`" @refresh="getWebJobRuns()">
     <template #start_time="{ row }">
-      <Date :datetime="row.start_time" format="MMMM D, YYYY hh:mm A" />
+      <Date :datetime="row.start_time" />
     </template>
     <template #end_time="{ row }">
-      <Date :datetime="row.end_time" format="MMMM D, YYYY hh:mm A" />
+      <Date :datetime="row.end_time" v-if="row.end_time !== '0001-01-01T00:00:00'"/>
     </template>
     <template #actions="{ row }">
       <q-btn size="sm" flat color="primary" @click.prevent="showOutput(row)">
@@ -82,7 +82,7 @@ onMounted(() => {
     </template>
   </TableList>
   <Alert ref="alert" />
-  <TextModal :title="`Webjob: ${webJobName}`" ref="outputModal" :show="showTextModal" :body="outTextFileContent" />
+  <TextModal :title="`Webjob: ${webJobName}`" ref="outputModal" :body="outTextFileContent" />
   <RequestModal type="sync" ref="requestModal">
     <template #body-text>
       Are you sure you want to trigger sync for company: {{ companyCode }}?

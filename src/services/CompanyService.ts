@@ -1,4 +1,5 @@
 import { Company } from "../interfaces/company.interface";
+import companiesJson from "../assets/companies.json";
 import ApiService from "./base/ApiService";
 
 
@@ -6,7 +7,7 @@ interface ApiServiceConstructorParams {
   prefix?: string;
 }
 
-export default abstract class CompanyService extends ApiService {
+export default class CompanyService extends ApiService {
   private prefix?: string;
 
   constructor(params?: ApiServiceConstructorParams) {
@@ -20,6 +21,9 @@ export default abstract class CompanyService extends ApiService {
   }
 
   async getList() {
+    if (import.meta.env.MODE === 'development') {
+      return companiesJson
+    }
     return super
       .request({
         url: this.prefix

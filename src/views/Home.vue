@@ -1,31 +1,50 @@
 <script setup lang="ts">
 import TableList from "../components/base/TableList.vue";
 import CompanyService from "../services/CompanyService";
-import { companyColumns } from '../composables/TableColumns'
-import companiesJson from '../assets/companies.json'
+import { companyColumns } from "../composables/TableColumns";
+import companiesJson from "../assets/companies.json";
 import { Company } from "../interfaces/company.interface";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
-const companies = ref<Company[]>(companiesJson)
-const router = useRouter()
+const companies = ref<Company[]>([]);
+const router = useRouter();
+
+onMounted(async () => {
+  companies.value = await new CompanyService().getList();
+});
 </script>
 
 <template>
   <div>
     <div class="row">
       <div class="col">
-        <TableList title="Companies" :rows="companies" :columns="companyColumns" row-key="name">
+        <TableList
+          title="Companies"
+          :rows="companies"
+          :columns="companyColumns"
+          row-key="name"
+        >
           <template #status="row">
             <q-badge :color="row.obj.status === 'ACTIVE' ? 'green' : 'red'">
               {{ row.obj.status }}
             </q-badge>
           </template>
           <template #actions="{ row }">
-            <q-btn size="sm" flat color="primary" @click.prevent="router.push(`companies/${row.code}/webjobs/etl`)">
+            <q-btn
+              size="sm"
+              flat
+              color="primary"
+              @click.prevent="router.push(`companies/${row.code}/webjobs/etl`)"
+            >
               ETL
             </q-btn>
-            <q-btn size="sm" flat color="secondary" @click.prevent="router.push(`companies/${row.code}/webjobs/sync`)">
+            <q-btn
+              size="sm"
+              flat
+              color="secondary"
+              @click.prevent="router.push(`companies/${row.code}/webjobs/sync`)"
+            >
               Sync
             </q-btn>
           </template>

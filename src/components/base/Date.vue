@@ -5,7 +5,7 @@ interface Props {
   datetime: string;
   format?: string;
 }
-defineProps<Props>();
+withDefaults(defineProps<Props>(), { format: "MMMM D, YYYY hh:mm A" });
 </script>
 
 <template>

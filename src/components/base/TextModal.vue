@@ -1,37 +1,60 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const maximizedToggle = ref(true)
+const maximizedToggle = ref(true);
 interface Props {
-  title?: string
-  body: string
+  title?: string;
+  body: string;
+  persistent?: boolean;
 }
 
-const show = ref(false)
-defineProps<Props>()
+const show = ref(false);
+withDefaults(defineProps<Props>(), { persistent: false, title: "" });
 
 const closeModal = () => {
-  show.value = false
-}
+  show.value = false;
+};
 
 defineExpose({
   show,
-  closeModal
-})
+  closeModal,
+});
 </script>
 
 <template>
-  <q-dialog v-model="show" persistent :maximized="maximizedToggle" transition-show="slide-up" @hide="$emit('close')"
-    transition-hide="slide-down">
+  <q-dialog
+    v-model="show"
+    :persistent="persistent"
+    :maximized="maximizedToggle"
+    transition-show="slide-up"
+    @hide="$emit('close')"
+    transition-hide="slide-down"
+  >
     <q-card>
       <q-bar>
         <q-space />
 
-        <q-btn dense flat icon="minimize" @click="maximizedToggle = false" :disable="!maximizedToggle">
-          <q-tooltip v-if="maximizedToggle" class="bg-white text-primary">Minimize</q-tooltip>
+        <q-btn
+          dense
+          flat
+          icon="minimize"
+          @click="maximizedToggle = false"
+          :disable="!maximizedToggle"
+        >
+          <q-tooltip v-if="maximizedToggle" class="bg-white text-primary"
+            >Minimize</q-tooltip
+          >
         </q-btn>
-        <q-btn dense flat icon="crop_square" @click="maximizedToggle = true" :disable="maximizedToggle">
-          <q-tooltip v-if="!maximizedToggle" class="bg-white text-primary">Maximize</q-tooltip>
+        <q-btn
+          dense
+          flat
+          icon="crop_square"
+          @click="maximizedToggle = true"
+          :disable="maximizedToggle"
+        >
+          <q-tooltip v-if="!maximizedToggle" class="bg-white text-primary"
+            >Maximize</q-tooltip
+          >
         </q-btn>
         <q-btn dense flat icon="close" v-close-popup>
           <q-tooltip class="bg-white text-primary">Close</q-tooltip>
