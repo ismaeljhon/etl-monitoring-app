@@ -4,9 +4,9 @@
       <q-header elevated>
         <q-toolbar>
           <q-btn flat :ripple="false" href="/">
-            <q-avatar>
+            <q-avatar square>
               <img
-                src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg"
+                :src="logo"
               />
             </q-avatar>
 
@@ -25,5 +25,5 @@
 </template>
 
 <script setup lang="ts">
-
+import logo from './assets/inriver-logo-black.png'
 </script>
