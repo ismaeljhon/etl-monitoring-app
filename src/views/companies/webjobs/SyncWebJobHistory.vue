@@ -5,25 +5,24 @@ import { useRoute, useRouter } from "vue-router";
 import { syncListColumns } from "../../../composables/TableColumns";
 
 import SyncService from "../../../services/SyncService";
-import Alert from "../../../components/base/Alert.vue";
 import { WebJobRun } from "../../../interfaces/webjob.interface";
-import TextModal from "../../../components/base/TextModal.vue";
 import Date from "../../../components/base/Date.vue";
 import RequestModal from "../../../components/base/RequestModal.vue";
+import OutputTextModal from "../../../components/base/OutputTextModal.vue";
 
 // declarations
 const runs = ref<WebJobRun[]>([]);
 const route = useRoute();
 const router = useRouter();
-const alert = ref();
-const outTextFileContent = ref<string>("");
 const webJobName = route.params.webjob_name.toString();
 const companyCode = route.params.company_code
 const isLoadingTable = ref(false)
-const outputModal = ref()
+const outputTextModal = ref()
 const showOutput = async (row: WebJobRun) => {
-  outTextFileContent.value = await new SyncService().getOutput(row.output_url);
-  outputModal.value.show = true
+  outputTextModal.value.showModal({
+    title: `Webjob: ${webJobName}`,
+    outputUrl: row.output_url
+  })
 };
 
 const getWebJobRuns = async () => {
@@ -85,8 +84,7 @@ onMounted(() => {
       </q-badge>
     </template>
   </TableList>
-  <Alert ref="alert" />
-  <TextModal :title="`Webjob: ${webJobName}`" ref="outputModal" :body="outTextFileContent" />
+  <OutputTextModal ref="outputTextModal" />
   <RequestModal type="sync" ref="requestModal">
     <template #body-text>
       Are you sure you want to trigger sync for company: {{ companyCode }}?
