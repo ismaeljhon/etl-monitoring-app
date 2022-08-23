@@ -14,8 +14,11 @@ interface Props {
 }
 const props = defineProps<Props>();
 const filter = reactive({
-  search: ""
+  search: "",
 });
+const pagination = ref({
+  rowsPerPage: 10
+})
 
 // hooks
 const data = computed(() => props.rows);
@@ -23,8 +26,18 @@ const data = computed(() => props.rows);
 
 <template>
   <div class="q-pt-5">
-    <q-table class="q-pt-lg" :rows="data" :columns="columns" :row-key="rowKey" :grid="$q.screen.lt.md"
-      :loading="loading" :filter="filter.search" wrap-cells>
+    <q-table
+      class="q-pt-lg"
+      :rows="data"
+      :columns="columns"
+      :row-key="rowKey"
+      :grid="$q.screen.lt.md"
+      :loading="loading"
+      :pagination="pagination"
+      :filter="filter.search"
+      no-data-label="I didn't find anything for you"
+      wrap-cells
+    >
       <template #top-left>
         <slot name="top-left">
           <div class="q-table__title" v-text="title"></div>
@@ -32,13 +45,26 @@ const data = computed(() => props.rows);
       </template>
       <template #top-right>
         <slot name="top-right">
-          <q-input outlined dense debounce="300" v-model="filter.search" placeholder="Search">
+          <q-input
+            outlined
+            dense
+            debounce="300"
+            v-model="filter.search"
+            placeholder="Search"
+          >
             <template v-slot:append>
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn color="primary" outline icon="sync" @click="$emit('refresh', filter)" class="float-right q-ml-sm">
-            Refresh</q-btn>
+          <q-btn
+            color="primary"
+            outline
+            icon="sync"
+            @click="$emit('refresh', filter)"
+            class="float-right q-ml-sm"
+          >
+            Refresh</q-btn
+          >
         </slot>
       </template>
       <template v-slot:header="props">
