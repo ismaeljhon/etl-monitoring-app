@@ -10,6 +10,6 @@ withDefaults(defineProps<Props>(), { format: "MMMM D, YYYY hh:mm A" });
 
 <template>
   <div>
-    {{ date.formatDate(datetime, format) }}
+    {{ datetime === '0001-01-01T00:00:00' ? '-' : date.formatDate(datetime, format) }}
   </div>
 </template>
