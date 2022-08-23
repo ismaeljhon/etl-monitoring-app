@@ -34,7 +34,7 @@ onMounted(async () => {
             <q-btn
               size="sm"
               flat
-              color="primary"
+              color="info"
               @click.prevent="router.push(`companies/${row.code}/webjobs/etl`)"
             >
               ETL
