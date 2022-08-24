@@ -1,17 +1,17 @@
 <template>
   <div>
-    <q-layout view="lHh lpr lFf" >
+    <q-layout view="lHh lpr lFf">
       <q-header elevated>
         <q-toolbar>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
+          <q-btn flat :ripple="false" href="/">
+            <q-avatar square>
+              <img
+                :src="logo"
+              />
+            </q-avatar>
 
-          <q-toolbar-title>
-            ETL Monitoring App
-          </q-toolbar-title>
-
-          <q-btn flat round dense icon="whatshot" />
+            <q-toolbar-title> ETL - Sync Monitoring </q-toolbar-title>
+          </q-btn>
         </q-toolbar>
       </q-header>
 
@@ -25,18 +25,5 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { Post } from "./interfaces/post.interface";
-import PostsApiService from "./services/PostsApiService";
-
-const headers = [
-  { value: "id", text: "ID" },
-  { value: "title", text: "Title" },
-  { value: "body", text: "Body" },
-];
-
-const posts = ref<Post[]>([]);
-(async () => {
-  posts.value = await new PostsApiService().getList({ _start: 0, _limit: 5 });
-})();
+import logo from './assets/inriver-logo-black.png'
 </script>

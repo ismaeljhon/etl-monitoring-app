@@ -1,3 +1,5 @@
+import { WebJobGetListDTO, WebJobRun } from '../../interfaces/webjob.interface';
+import LocalStorageService from '../LocalStorageService';
 import ApiService from './ApiService';
 
 interface ApiServiceConstructorParams {
@@ -8,6 +10,7 @@ export default abstract class AzureTriggeredWebJobsService<
   Entity
 > extends ApiService {
   private prefix?: string;
+  private localStorage: InstanceType<typeof LocalStorageService>;
   constructor(params?: ApiServiceConstructorParams) {
     super({
       baseURL: import.meta.env.VITE_TRIGGERED_WEBJOBS_API_BASE_URL,
@@ -17,20 +20,49 @@ export default abstract class AzureTriggeredWebJobsService<
       },
     });
     this.prefix = params?.prefix || '';
+    this.localStorage = new LocalStorageService();
   }
 
-  async getList(): Promise<Entity[]> {
-    return super
-      .request({
+  async getList(opts: WebJobGetListDTO = {}): Promise<Entity[]> {
+    /** Fetch data from API only when triggered */
+    const { refresh = false } = opts;
+    const localStorageWebJobs = this.localStorage.getItem('webjobs');
+    let data = JSON.parse(localStorageWebJobs || '[]');
+
+    if (!data.length || refresh) {
+      const { data: resData = [] } = await super.request({
         url: this.prefix,
-      })
-      .then((res) => res.data);
+      });
+
+      /** Save the fetched data to localstorage to be reusable for other services */
+      this.localStorage.setItem('webjobs', JSON.stringify(resData));
+
+      data = resData;
+    }
+
+    return data;
   }
 
   async get(name: string): Promise<Entity> {
     return super
       .request({
         url: name,
+      })
+      .then((res) => res.data);
+  }
+
+  async getHistory(name: string): Promise<WebJobRun[]> {
+    return super
+      .request({
+        url: `${this.prefix}/${name}/history`,
+      })
+      .then((res) => res.data.runs);
+  }
+
+  async getOutput(url: string) {
+    return super
+      .request({
+        url: url,
       })
       .then((res) => res.data);
   }
@@ -43,4 +75,6 @@ export default abstract class AzureTriggeredWebJobsService<
       })
       .then((res) => res.data);
   }
+
+  async getLatestRun() {}
 }

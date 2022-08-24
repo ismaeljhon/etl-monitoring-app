@@ -1,12 +1,21 @@
 <template>
-  <q-btn>
-    {{ title }}
+  <q-btn @click="executeClick">
+    {{ `${type} ${todo}` }}
   </q-btn>
 </template>
 
 <script setup lang="ts">
+import moment from 'moment'
+import SyncService from '../../services/SyncService'
+
 interface Props {
-  title?: string;
+  type?: string;
+  code?: string;
+  todo: string;
 }
-defineProps<Props>();
+const props = defineProps<Props>();
+
+const executeClick = async () => {
+  // 
+}
 </script>

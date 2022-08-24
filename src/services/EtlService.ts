@@ -1,4 +1,4 @@
-import { WebJob } from '../interfaces/webjob.interface';
+import { WebJob, WebJobGetListDTO } from '../interfaces/webjob.interface';
 import AzureTriggeredWebJobsService from './base/AzureTriggeredWebJobsService';
 
 export default class EtlService extends AzureTriggeredWebJobsService<WebJob> {
@@ -6,9 +6,15 @@ export default class EtlService extends AzureTriggeredWebJobsService<WebJob> {
     super();
   }
 
-  async getList(): Promise<WebJob[]> {
-    return super
-      .getList()
-      .then((res) => res.filter((item) => item?.name.includes('ETL')));
+  async getList(opts: WebJobGetListDTO): Promise<WebJob[]> {
+    const { company_code = '' } = opts;
+    let res = await super.getList(opts);
+
+    res = res.filter((item) => item?.name.includes('ETL'));
+
+    if (company_code)
+      res = res.filter((item) => item?.name.includes(`${company_code}-ETL`));
+
+    return res;
   }
 }
