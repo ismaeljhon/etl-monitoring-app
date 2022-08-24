@@ -21,13 +21,14 @@ export default class CompanyService extends ApiService {
   }
 
   async getList() {
-    if (import.meta.env.MODE === 'development') {
-      return companiesJson
-    }
-    return super
-      .request({
-        url: this.prefix
-      })
-      .then((res) => res.data)
+    // if (import.meta.env.MODE === 'development') {
+    //   return companiesJson
+    // }
+    // return super
+    //   .request({
+    //     url: this.prefix
+    //   })
+    //   .then((res) => res.data)
+    return companiesJson;
   }
 }
