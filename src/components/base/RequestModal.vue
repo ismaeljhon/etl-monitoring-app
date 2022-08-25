@@ -1,30 +1,33 @@
-
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, defineAsyncComponent, defineComponent } from "vue";
 
 // declarations
 interface Props {
   type: string;
 }
-const props = defineProps<Props>()
-const show = ref(false)
+const props = defineProps<Props>();
+const show = ref(false);
 
 const requestTitle = computed(() => {
-  return `${props.type.toUpperCase()} Request`
-})
+  return `${props.type.toUpperCase()} Request`;
+});
 
 const closeModal = () => {
-  show.value = false
-}
+  show.value = false;
+};
 
 const formMapping = {
-  etl: () => import('../forms/EtlRequestForm.vue'),
-}
+  etl: defineAsyncComponent(() => import("../forms/EtlRequestForm.vue")),
+};
+
+const test = () => {
+  console.log("well");
+};
 
 defineExpose({
   show,
-  closeModal
-})
+  closeModal,
+});
 </script>
 <template>
   <div class="q-pa-md q-gutter-sm">
@@ -38,7 +41,7 @@ defineExpose({
 
         <q-card-section class="q-pa-lg">
           <slot name="body-text"></slot>
-          <component :is="formMapping[type]" />
+          <component :is="formMapping[props.type]" />
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
