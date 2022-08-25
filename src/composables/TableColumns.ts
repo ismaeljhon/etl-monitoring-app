@@ -68,6 +68,41 @@ export const companySyncColumns = ref<TableColumn[]>([
   },
 ]);
 
+export const companyEtlColumns = ref<TableColumn[]>([
+  {
+    name: "name",
+    align: "center",
+    label: "Name",
+    field: "name",
+    sortable: true,
+  },
+  {
+    name: "type",
+    align: "center",
+    label: "Type",
+    field: "type",
+    sortable: true,
+  },
+  {
+    name: "using_sdk",
+    align: "center",
+    label: "SDK",
+    field: "using_sdk",
+  },
+  {
+    name: "latest_run",
+    align: "left",
+    label: "Latest Run",
+    field: "latest_run",
+  },
+  {
+    name: "actions",
+    align: "center",
+    label: "Actions",
+    field: "",
+  },
+]);
+
 export const syncListColumns = ref<TableColumn[]>([
   {
     name: "name",
