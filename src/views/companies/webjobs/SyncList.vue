@@ -5,6 +5,7 @@ import { WebJob } from "../../../interfaces/webjob.interface";
 import SyncService from "../../../services/SyncService";
 import { useRoute, useRouter } from "vue-router";
 import { companySyncColumns } from "../../../composables/TableColumns";
+import LatestRun from "../../../components/base/LatestRun.vue";
 
 const webjobs = ref<WebJob[]>([]);
 const route = useRoute();
@@ -54,6 +55,9 @@ onMounted(async () => {
           >
             Details
           </q-btn>
+        </template>
+        <template #latest_run="{ row }">
+          <LatestRun :latest_run="row.latest_run"></LatestRun>
         </template>
         <template #using_sdk="{ row }">
           <div class="q-pa-md">
