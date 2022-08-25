@@ -57,7 +57,8 @@ onMounted(async () => {
           </q-btn>
         </template>
         <template #latest_run="{ row }">
-          <LatestRun :latest_run="row.latest_run"></LatestRun>
+          <LatestRun v-if="row.latest_run" :latest_run="row.latest_run"></LatestRun>
+          <span v-else>-</span>
         </template>
         <template #using_sdk="{ row }">
           <div class="q-pa-md">
