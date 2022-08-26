@@ -1,0 +1,25 @@
+trigger:
+  - none
+
+resources:
+  pipelines:
+   - pipeline: buildPipeline  # Name of the pipeline resource
+     source: 'ETL.App/etl-app_builds' # Name of the triggering pipeline
+  repositories:
+    - repository: templates
+      type: git
+      name: 'Frontend - R and D/pipeline-templates'
+      ref: master
+
+stages:
+# Deploy to etl-app_production 
+- template: 'app-service/static/deploy.yml@templates'
+  parameters:
+    app_settings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16'
+    download_pipeline: buildPipeline
+    pipeline_environment: etl-app_production
+    resource_group: detail-packages
+    service_connection: detail-packages-etl_ARM
+    slot: app
+    vm_image: windows-latest
+    web_app_name: 'detail-packages-etl'
