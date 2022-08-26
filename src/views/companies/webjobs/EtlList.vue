@@ -13,6 +13,7 @@ const route = useRoute();
 const router = useRouter();
 const companyCode = ref<string>(route.params.company_code.toString());
 const requestModal = ref();
+const dataRequest = ref();
 const isLoadingRequest = ref(false);
 
 const refreshTable = async () => {
@@ -24,9 +25,13 @@ const refreshTable = async () => {
 
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
-  console.log("etl trigger");
+  console.log('etl trigger', dataRequest)
   isLoadingRequest.value = false;
   requestModal.value.closeModal();
+};
+
+const data = (data) => {
+  dataRequest.value = data
 };
 
 onMounted(async () => {
@@ -94,7 +99,7 @@ onMounted(async () => {
       </TableList>
     </div>
   </div>
-  <RequestModal type="etl" ref="requestModal">
+  <RequestModal type="etl" ref="requestModal" @data="data">
     <template #footer-btns>
       <q-btn label="Cancel" v-close-popup v-show="!isLoadingRequest" />
       <q-btn
