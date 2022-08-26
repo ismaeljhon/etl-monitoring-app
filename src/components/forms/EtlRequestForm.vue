@@ -1,4 +1,5 @@
-<script lang="ts" setup>import { reactive } from 'vue';
+<script lang="ts" setup>
+import { reactive } from "vue";
 
 const data = reactive({
   name: '',
@@ -22,5 +23,4 @@ const data = reactive({
       </template>
     </q-input>
   </div>
-
 </template>
