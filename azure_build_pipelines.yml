@@ -1,0 +1,17 @@
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: 'Frontend - R and D/pipeline-templates'
+      ref: master
+
+trigger:
+- none
+
+# Create build artifact
+stages:
+- template: 'app-service/static/build.yml@templates'
+  parameters:
+    node_version: '16.x'
+    root_folder: dist
+    vm_image: windows-latest

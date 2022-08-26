@@ -6,7 +6,9 @@ interface Props {
   type: string;
 }
 const props = defineProps<Props>();
+const data = ref();
 const show = ref(false);
+const emit = defineEmits(["data"]);
 
 const requestTitle = computed(() => {
   return `${props.type.toUpperCase()} Request`;
@@ -20,8 +22,8 @@ const formMapping = {
   etl: defineAsyncComponent(() => import("../forms/EtlRequestForm.vue")),
 };
 
-const test = () => {
-  console.log("well");
+const catchData = (data) => {
+  emit('data', data)
 };
 
 defineExpose({
@@ -41,7 +43,7 @@ defineExpose({
 
         <q-card-section class="q-pa-lg">
           <slot name="body-text"></slot>
-          <component :is="formMapping[props.type]" />
+          <component :is="formMapping[props.type]" @input="catchData" />
         </q-card-section>
 
         <q-card-actions align="right" class="text-primary">
