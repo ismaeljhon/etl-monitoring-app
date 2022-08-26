@@ -60,7 +60,7 @@ onMounted(async () => {
     <div class="col col-12">
       <TableList
         class="q-ma-lg"
-        title="ETL WebJobs"
+        :title="`${companyCode} ETL Webjobs`"
         :rows="webjobs"
         :columns="companyEtlColumns"
         :has-actions="true"
