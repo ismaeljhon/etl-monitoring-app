@@ -28,7 +28,7 @@ stages:
           steps:
           - download: buildPipeline
             artifact: drop
-          - task: AzureRmWebAppDeployment@4
+          - task: AzureRmWebAppDeployment@1
             inputs:
               appType: 'webApp'
               azureSubscription: detail-packages-etl_ARM
