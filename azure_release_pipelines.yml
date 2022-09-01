@@ -11,15 +11,38 @@ resources:
       name: 'Frontend - R and D/pipeline-templates'
       ref: master
 
+# Deploy to etl-app_production
 stages:
-# Deploy to etl-app_production 
-- template: 'app-service/static/deploy.yml@templates'
-  parameters:
-    app_settings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16 -VITE_TRIGGERED_WEBJOBS_API_BASE_URL $(VITE_TRIGGERED_WEBJOBS_API_BASE_URL) -DETAIL_WEBJOBS_BASIC_AUTH_USERNAME $(DETAIL_WEBJOBS_BASIC_AUTH_USERNAME) -DETAIL_WEBJOBS_BASIC_AUTH_PASSWORD $(DETAIL_WEBJOBS_BASIC_AUTH_PASSWORD)'
-    download_pipeline: buildPipeline
-    pipeline_environment: etl-app_production
-    resource_group: detail-packages
-    service_connection: detail-packages-etl_ARM
-    slot: app
-    vm_image: windows-latest
-    web_app_name: 'detail-packages-etl'
+- stage: 'app'
+  displayName: 'Deploy to app'
+
+  jobs:
+  - deployment:
+    displayName: 'Deploying to app'
+    environment: etl-app_production
+    pool:
+      vmImage: windows-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: buildPipeline
+            artifact: drop
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              appType: 'webApp'
+              azureSubscription: detail-packages-etl_ARM
+              deployToSlotOrASE: true
+              enableCustomDeployment: true
+              packageForLinux: '$(Pipeline.Workspace)/**/app.zip'
+              AppSettings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16'
+              ConnectionType: 'AzureRM'
+              DeploymentType: webDeploy
+              RemoveAdditionalFilesFlag: true
+              ResourceGroupName: detail-packages
+              SlotName: 'app'
+              WebAppName: 'detail-packages-etl'
+            env:
+              VITE_TRIGGERED_WEBJOBS_API_BASE_URL: $(VITE_TRIGGERED_WEBJOBS_API_BASE_URL)
+              DETAIL_WEBJOBS_BASIC_AUTH_USERNAME: $(DETAIL_WEBJOBS_BASIC_AUTH_USERNAME)
+              DETAIL_WEBJOBS_BASIC_AUTH_PASSWORD: $(DETAIL_WEBJOBS_BASIC_AUTH_PASSWORD)
