@@ -15,7 +15,7 @@ stages:
 # Deploy to etl-app_production 
 - template: 'app-service/static/deploy.yml@templates'
   parameters:
-    app_settings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16'
+    app_settings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16 VITE_TRIGGERED_WEBJOBS_API_BASE_URL'
     download_pipeline: buildPipeline
     pipeline_environment: etl-app_production
     resource_group: detail-packages
@@ -23,6 +23,3 @@ stages:
     slot: app
     vm_image: windows-latest
     web_app_name: 'detail-packages-etl'
-
-env:
-  VITE_TRIGGERED_WEBJOBS_API_BASE_URL: $(VITE_TRIGGERED_WEBJOBS_API_BASE_URL)
