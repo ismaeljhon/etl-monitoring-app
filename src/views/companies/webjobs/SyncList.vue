@@ -23,36 +23,26 @@ onMounted(async () => {
     company_code: companyCode.value,
   });
 });
+
+console.log("vite env", import.meta.env)
+console.log("url", import.meta.env.VITE_TRIGGERED_WEBJOBS_API_BASE_URL)
+console.log("username", import.meta.env.VITE_BASIC_AUTH_USERNAME)
+console.log("password", import.meta.env.VITE_BASIC_AUTH_PASSWORD)
 </script>
 
 <template>
   <div class="row">
     <div class="col col-12">
       <div class="q-ma-lg float-left">
-        <q-btn
-          icon="keyboard_double_arrow_left"
-          @click.prevent="router.push({ name: 'Home' })"
-          >Back To Companies</q-btn
-        >
+        <q-btn icon="keyboard_double_arrow_left" @click.prevent="router.push({ name: 'Home' })">Back To Companies
+        </q-btn>
       </div>
     </div>
     <div class="col col-12">
-      <TableList
-        class="q-ma-lg"
-        title="Sync WebJobs"
-        :rows="webjobs"
-        :columns="companySyncColumns"
-        :has-actions="true"
-        row-key="name"
-        @refresh="refreshTable"
-      >
+      <TableList class="q-ma-lg" title="Sync WebJobs" :rows="webjobs" :columns="companySyncColumns" :has-actions="true"
+        row-key="name" @refresh="refreshTable">
         <template #actions="{ row }">
-          <q-btn
-            size="sm"
-            flat
-            color="info"
-            @click.prevent="router.push(`sync/${row.name}`)"
-          >
+          <q-btn size="sm" flat color="info" @click.prevent="router.push(`sync/${row.name}`)">
             Details
           </q-btn>
         </template>
