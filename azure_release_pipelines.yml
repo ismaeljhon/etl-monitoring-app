@@ -34,6 +34,7 @@ stages:
               azureSubscription: detail-packages-etl_ARM
               deployToSlotOrASE: true
               enableCustomDeployment: true
+              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
               AppSettings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16'
               ConnectionType: 'AzureRM'
               DeploymentType: webDeploy
