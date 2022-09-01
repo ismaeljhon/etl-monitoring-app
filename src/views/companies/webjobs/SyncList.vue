@@ -25,9 +25,7 @@ onMounted(async () => {
 });
 
 console.log("vite env", import.meta.env)
-console.log("url", import.meta.env.VITE_TRIGGERED_WEBJOBS_API_BASE_URL)
-console.log("username", import.meta.env.VITE_BASIC_AUTH_USERNAME)
-console.log("password", import.meta.env.VITE_BASIC_AUTH_PASSWORD)
+console.log("vite meta", __APP_ENV__)
 </script>
 
 <template>

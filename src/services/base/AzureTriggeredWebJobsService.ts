@@ -15,8 +15,8 @@ export default abstract class AzureTriggeredWebJobsService<
     super({
       baseURL: import.meta.env.VITE_TRIGGERED_WEBJOBS_API_BASE_URL,
       auth: {
-        username: import.meta.env.VITE_BASIC_AUTH_USERNAME,
-        password: import.meta.env.VITE_BASIC_AUTH_PASSWORD,
+        username: __APP_ENV__.DETAIL_WEBJOBS_BASIC_AUTH_USERNAME,
+        password: __APP_ENV__.DETAIL_WEBJOBS_BASIC_AUTH_PASSWORD,
       },
     });
     this.prefix = params?.prefix || '';
