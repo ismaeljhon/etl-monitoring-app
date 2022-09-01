@@ -14,11 +14,11 @@ resources:
 # Deploy to etl-app_production
 stages:
 - stage: 'app'
-  displayName: 'Deploy to app'
+  displayName: 'Deploy to detail-packages-etl/slot'
 
   jobs:
   - deployment:
-    displayName: 'Deploying to app'
+    displayName: 'Deploying to detail-packages-etl/slot'
     environment: etl-app_production
     pool:
       vmImage: windows-latest
@@ -30,18 +30,18 @@ stages:
             artifact: drop
           - task: AzureRmWebAppDeployment@4
             inputs:
-              appType: 'webApp'
+              appType: webApp
               azureSubscription: detail-packages-etl_ARM
               deployToSlotOrASE: true
               enableCustomDeployment: true
-              packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+              packageForLinux: '$(Pipeline.Workspace)/**/build.zip'
               AppSettings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16'
-              ConnectionType: 'AzureRM'
+              ConnectionType: AzureRM
               DeploymentType: webDeploy
               RemoveAdditionalFilesFlag: true
               ResourceGroupName: detail-packages
-              SlotName: 'app'
-              WebAppName: 'detail-packages-etl'
+              SlotName: app
+              WebAppName: detail-packages-etl
             env:
               VITE_TRIGGERED_WEBJOBS_API_BASE_URL: $(VITE_TRIGGERED_WEBJOBS_API_BASE_URL)
               DETAIL_WEBJOBS_BASIC_AUTH_USERNAME: $(DETAIL_WEBJOBS_BASIC_AUTH_USERNAME)
