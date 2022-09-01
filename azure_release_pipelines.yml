@@ -23,3 +23,6 @@ stages:
     slot: app
     vm_image: windows-latest
     web_app_name: 'detail-packages-etl'
+
+variables:
+  VITE_TRIGGERED_WEBJOBS_API_BASE_URL
