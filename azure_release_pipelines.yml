@@ -11,7 +11,6 @@ resources:
       name: 'Frontend - R and D/pipeline-templates'
       ref: master
 
-# Deploy to etl-app_production
 stages:
 - stage: 'app'
   displayName: 'Deploy to detail-packages-etl/slot'
