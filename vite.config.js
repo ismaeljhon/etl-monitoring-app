@@ -15,7 +15,4 @@ export default defineConfig({
       sassVariables: 'src/quasar-variables.sass',
     }),
   ],
-  define: {
-    __APP_ENV__: process.env,
-  },
 });

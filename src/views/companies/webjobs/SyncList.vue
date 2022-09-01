@@ -25,7 +25,6 @@ onMounted(async () => {
 });
 
 console.log("vite env", import.meta.env)
-console.log("vite meta", __APP_ENV__)
 </script>
 
 <template>
