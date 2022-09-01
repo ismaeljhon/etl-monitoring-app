@@ -4,7 +4,7 @@ import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), ['VITE_', 'DETAIL_']);
+  const env = loadEnv(mode, process.cwd(), '');
   return {
     server: {
       port: 4000,
