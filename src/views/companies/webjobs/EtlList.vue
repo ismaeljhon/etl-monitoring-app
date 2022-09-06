@@ -25,13 +25,13 @@ const refreshTable = async () => {
 
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
-  console.log('etl trigger', dataRequest)
+  console.log("etl trigger", dataRequest);
   isLoadingRequest.value = false;
   requestModal.value.closeModal();
 };
 
 const data = (data) => {
-  dataRequest.value = data
+  dataRequest.value = data;
 };
 
 onMounted(async () => {
@@ -47,11 +47,11 @@ onMounted(async () => {
       <div class="q-ma-lg float-left">
         <q-btn
           icon="keyboard_double_arrow_left"
-          @click.prevent="router.push({ name: 'Home' })"
-          >Back To Companies</q-btn
+          @click.prevent="router.push({ name: 'SyncList' })"
+          >Back To list</q-btn
         >
       </div>
-      <div class="q-mt-lg float-right">
+      <div class="q-mt-lg">
         <q-btn
           color="primary"
           icon="add"
@@ -62,6 +62,8 @@ onMounted(async () => {
         </q-btn>
       </div>
     </div>
+  </div>
+  <div class="row">
     <div class="col col-12">
       <TableList
         class="q-ma-lg"
@@ -94,6 +96,44 @@ onMounted(async () => {
             <div :class="row.using_sdk ? 'text-green' : 'text-red'">
               <q-icon size="md" name="check" />
             </div>
+          </div>
+        </template>
+        <template #custom-grid="{ items }">
+          <div
+            class="q-pa-xs col-xs-12 col-sm-6 col-md-4 grid-style-transition"
+          >
+            <q-card>
+              <q-card-section>
+                <div class="row">
+                  <div class="col float-left">
+                    <b>{{ items.row.name }}</b>
+                  </div>
+                  <div class="col float-right">
+                    <q-btn
+                      size="sm"
+                      flat
+                      color="info"
+                      @click.prevent="router.push(`etl/${items.row.name}`)"
+                    >
+                      Details
+                    </q-btn>
+                  </div>
+                </div>
+              </q-card-section>
+              <q-separator />
+              <q-card-section>
+                <q-item-section>
+                  <q-item-label>
+                    Latest Run:
+                    <LatestRun
+                      v-if="items.row.latest_run"
+                      :latest_run="items.row.latest_run"
+                    ></LatestRun>
+                    <span v-else>-</span>
+                  </q-item-label>
+                </q-item-section>
+              </q-card-section>
+            </q-card>
           </div>
         </template>
       </TableList>

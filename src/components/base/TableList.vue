@@ -17,8 +17,8 @@ const filter = reactive({
   search: "",
 });
 const pagination = ref({
-  rowsPerPage: 10
-})
+  rowsPerPage: 10,
+});
 
 // hooks
 const data = computed(() => props.rows);
@@ -45,26 +45,32 @@ const data = computed(() => props.rows);
       </template>
       <template #top-right>
         <slot name="top-right">
-          <q-input
-            outlined
-            dense
-            debounce="300"
-            v-model="filter.search"
-            placeholder="Search"
-          >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-          <q-btn
-            color="primary"
-            outline
-            icon="sync"
-            @click="$emit('refresh', filter)"
-            class="float-right q-ml-sm"
-          >
-            Refresh</q-btn
-          >
+          <div class="row">
+            <div class="col">
+              <q-input
+                outlined
+                dense
+                debounce="300"
+                v-model="filter.search"
+                placeholder="Search"
+              >
+                <template v-slot:append>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </div>
+            <div class="col">
+              <q-btn
+                color="primary"
+                outline
+                icon="sync"
+                @click="$emit('refresh', filter)"
+                class="float-right q-ml-sm"
+              >
+                Refresh</q-btn
+              >
+            </div>
+          </div>
         </slot>
       </template>
       <template v-slot:header="props">
@@ -94,6 +100,9 @@ const data = computed(() => props.rows);
             </slot>
           </q-td>
         </q-tr>
+      </template>
+      <template v-slot:item="props">
+        <slot name="custom-grid" :items="props"> Items </slot>
       </template>
     </q-table>
   </div>
