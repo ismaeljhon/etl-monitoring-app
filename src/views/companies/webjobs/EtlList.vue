@@ -7,6 +7,7 @@ import { useRoute, useRouter } from "vue-router";
 import { companyEtlColumns } from "../../../composables/TableColumns";
 import LatestRun from "../../../components/base/LatestRun.vue";
 import RequestModal from "../../../components/base/RequestModal.vue";
+import EtlTriggerService from "../../../services/EtlTriggerService";
 
 const webjobs = ref<WebJob[]>([]);
 const route = useRoute();
@@ -15,6 +16,7 @@ const companyCode = ref<string>(route.params.company_code.toString());
 const requestModal = ref();
 const dataRequest = ref();
 const isLoadingRequest = ref(false);
+const disabled = ref(true);
 
 const refreshTable = async () => {
   webjobs.value = await new EtlService().getList({
@@ -25,13 +27,19 @@ const refreshTable = async () => {
 
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
-  console.log("etl trigger", dataRequest);
+  try {
+    const resp = await new EtlTriggerService().triggerEtl(dataRequest.value)
+    console.log(resp)
+  } catch (e) {
+    console.log(e)
+  }
   isLoadingRequest.value = false;
   requestModal.value.closeModal();
 };
 
 const data = (data) => {
   dataRequest.value = data;
+  disabled.value = data.code && data.date ? false : true
 };
 
 onMounted(async () => {
@@ -144,6 +152,7 @@ onMounted(async () => {
       <q-btn label="Cancel" v-close-popup v-show="!isLoadingRequest" />
       <q-btn
         color="primary"
+        :disabled="disabled"
         label="Confirm"
         @click.prevent="triggerEtlRequest"
         :loading="isLoadingRequest"
