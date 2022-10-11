@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import TableList from "../../../components/base/TableList.vue";
+import MessageBanner from "../../../components/base/MessageBanner.vue";
 import { WebJob } from "../../../interfaces/webjob.interface";
 import EtlService from "../../../services/EtlService";
 import { useRoute, useRouter } from "vue-router";
@@ -15,6 +16,8 @@ const router = useRouter();
 const companyCode = ref<string>(route.params.company_code.toString());
 const requestModal = ref();
 const dataRequest = ref();
+const msg = ref();
+const show = ref(false)
 const isLoadingRequest = ref(false);
 const disabled = ref(true);
 
@@ -28,10 +31,11 @@ const refreshTable = async () => {
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
   try {
-    const resp = await new EtlTriggerService().triggerEtl(dataRequest.value)
-    console.log(resp)
+    const resp = await new EtlTriggerService().triggerEtl(dataRequest.value);
+    msg.value = resp;
+    show.value = true
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
   isLoadingRequest.value = false;
   requestModal.value.closeModal();
@@ -39,8 +43,12 @@ const triggerEtlRequest = async () => {
 
 const data = (data) => {
   dataRequest.value = data;
-  disabled.value = data.code && data.date ? false : true
+  disabled.value = data.code && data.date ? false : true;
 };
+
+const hideBanner = () => {
+  show.value = false;
+}
 
 onMounted(async () => {
   webjobs.value = await new EtlService().getList({
@@ -69,6 +77,11 @@ onMounted(async () => {
           ETL Request
         </q-btn>
       </div>
+    </div>
+  </div>
+  <div class="row justify-center" v-if="msg && show">
+    <div class="col col-lg-6 col-sm-12 col-xs-12">
+      <MessageBanner :msg="msg" @hide="hideBanner" />
     </div>
   </div>
   <div class="row">
