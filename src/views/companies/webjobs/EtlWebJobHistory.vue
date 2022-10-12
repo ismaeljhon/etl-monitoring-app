@@ -93,10 +93,10 @@ onMounted(() => {
         <q-card>
           <q-card-section>
             <div class="row">
-              <div class="col float-left">
+              <div class="col-auto">
                 <b>{{ items.row.name }}</b>
               </div>
-              <div class="col float-right">
+              <div class="col-auto">
                 <q-btn
                   size="sm"
                   flat

@@ -34,6 +34,7 @@ const triggerEtlRequest = async () => {
     const resp = await new EtlTriggerService().triggerEtl(dataRequest.value);
     msg.value = resp;
     show.value = true
+    refreshTable()
   } catch (e) {
     console.log(e);
   }
@@ -67,11 +68,11 @@ onMounted(async () => {
           >Back To list</q-btn
         >
       </div>
-      <div class="q-mt-lg">
+      <div class="q-mt-lg" :class="$q.screen.lt.md ? '' : 'float-right'">
         <q-btn
           color="primary"
           icon="add"
-          :class="$q.screen.lt.md ? 'full-width' : 'q-mx-md'"
+          :class="$q.screen.lt.md ? '' : 'q-mx-md'"
           @click="requestModal.show = true"
         >
           ETL Request
@@ -126,10 +127,10 @@ onMounted(async () => {
             <q-card>
               <q-card-section>
                 <div class="row">
-                  <div class="col float-left">
+                  <div class="col-auto">
                     <b>{{ items.row.name }}</b>
                   </div>
-                  <div class="col float-right">
+                  <div class="col-auto">
                     <q-btn
                       size="sm"
                       flat
