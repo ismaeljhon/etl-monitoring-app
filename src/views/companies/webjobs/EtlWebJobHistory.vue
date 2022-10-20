@@ -88,6 +88,51 @@ onMounted(() => {
         {{ row.obj.status }}
       </q-badge>
     </template>
+    <template #custom-grid="{ items }">
+      <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 grid-style-transition">
+        <q-card>
+          <q-card-section>
+            <div class="row">
+              <div class="col-auto">
+                <b>{{ items.row.name }}</b>
+              </div>
+              <div class="col-auto">
+                <q-btn
+                  size="sm"
+                  flat
+                  color="info"
+                  @click.prevent="showOutput(items.row)"
+                >
+                  View Logs
+                </q-btn>
+              </div>
+            </div>
+          </q-card-section>
+          <q-separator />
+          <q-card-section>
+            <q-item-section>
+              <q-item-label>
+                <b>Start Time:</b> <Date :datetime="items.row.start_time" />
+              </q-item-label>
+              <q-item-label>
+                <b>End Time:</b> <Date :datetime="items.row.end_time" />
+              </q-item-label>
+              <q-item-label>
+                <b>Status:</b>
+                <q-chip
+                  :color="items.row.status === 'Success' ? 'green' : 'red'"
+                  text-color="white"
+                  dense
+                  square
+                >
+                  {{ items.row.status }}
+                </q-chip>
+              </q-item-label>
+            </q-item-section>
+          </q-card-section>
+        </q-card>
+      </div>
+    </template>
   </TableList>
   <OutputTextModal ref="outputTextModal" />
   <RequestModal type="sync" ref="requestModal">

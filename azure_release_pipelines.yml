@@ -15,7 +15,7 @@ stages:
 # Deploy to etl-app_production 
 - template: 'app-service/static/deploy.yml@templates'
   parameters:
-    app_settings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16 -VITE_TRIGGERED_WEBJOBS_API_BASE_URL -VITE_BASIC_AUTH_USERNAME -VITE_BASIC_AUTH_PASSWORD'
+    app_settings: '-NODE_ENV production -WEBSITE_NODE_DEFAULT_VERSION ~16'
     download_pipeline: buildPipeline
     pipeline_environment: etl-app_production
     resource_group: detail-packages
