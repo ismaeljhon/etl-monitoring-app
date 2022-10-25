@@ -17,7 +17,7 @@ const companyCode = ref<string>(route.params.company_code.toString());
 const requestModal = ref();
 const dataRequest = ref();
 const msg = ref();
-const show = ref(false)
+const show = ref(false);
 const isLoadingRequest = ref(false);
 const disabled = ref(true);
 
@@ -33,8 +33,8 @@ const triggerEtlRequest = async () => {
   try {
     const resp = await new EtlTriggerService().triggerEtl(dataRequest.value);
     msg.value = resp;
-    show.value = true
-    refreshTable()
+    show.value = true;
+    refreshTable();
   } catch (e) {
     console.log(e);
   }
@@ -49,7 +49,7 @@ const data = (data) => {
 
 const hideBanner = () => {
   show.value = false;
-}
+};
 
 onMounted(async () => {
   webjobs.value = await new EtlService().getList({
@@ -64,7 +64,7 @@ onMounted(async () => {
       <div class="q-ma-lg float-left">
         <q-btn
           icon="keyboard_double_arrow_left"
-          @click.prevent="router.push({ name: 'SyncList' })"
+          @click.prevent="router.push({ name: 'Home' })"
           >Back To list</q-btn
         >
       </div>
