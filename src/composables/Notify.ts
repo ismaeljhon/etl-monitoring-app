@@ -1,36 +1,33 @@
 import { Notify } from "quasar";
-import { useRouter } from "vue-router";
+import { router } from "../../src/router";
 
-const router = useRouter();
+function pushUrl(companyCode, dir) {
+  router.push(`/companies/${companyCode.value}/webjobs/etl/${dir}`);
+}
 
 export function showNotif(companyCode, msg) {
+  console.log(companyCode, msg)
   if (msg.value) {
-    setTimeout(() => {
-      Notify.create(
+    Notify.create({
+      progress: true,
+      message: `${msg.value?.msg}. Webjob: ${msg.value?.dir}`,
+      type: msg.value?.success ? "positive" : "negative",
+      multiLine: true,
+      actions: [
         {
-          progress: true,
-          message: `${msg.value?.msg}. Webjob: ${msg.value?.dir}`,
-          type: msg.value?.success ? "positive" : "negative",
-          multiLine: true,
-          actions: [
-            {
-              label: "Check WebJob",
-              color: "white",
-              handler: () => {
-                router.push(
-                  `/companies/${companyCode.value}/webjobs/etl/${msg.value?.dir}`
-                );
-              },
-            },
-            {
-              label: "Dismiss",
-              color: "white",
-              handler: () => {},
-            },
-          ],
-        }
-      );
-    }, 2000);
+          label: "Check WebJob",
+          color: "white",
+          handler: () => {
+            pushUrl(companyCode.value, msg.value?.dir);
+          },
+        },
+        {
+          label: "Dismiss",
+          color: "white",
+          handler: () => {},
+        },
+      ],
+    });
   } else {
     Notify.create({
       progress: true,
