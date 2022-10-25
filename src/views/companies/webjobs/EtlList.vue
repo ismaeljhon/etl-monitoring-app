@@ -6,6 +6,7 @@ import { WebJob } from "../../../interfaces/webjob.interface";
 import EtlService from "../../../services/EtlService";
 import { useRoute, useRouter } from "vue-router";
 import { companyEtlColumns } from "../../../composables/TableColumns";
+import { showNotif } from "../../../composables/Notify";
 import LatestRun from "../../../components/base/LatestRun.vue";
 import RequestModal from "../../../components/base/RequestModal.vue";
 import EtlTriggerService from "../../../services/EtlTriggerService";
@@ -33,10 +34,11 @@ const triggerEtlRequest = async () => {
   try {
     const resp = await new EtlTriggerService().triggerEtl(dataRequest.value);
     msg.value = resp;
-    show.value = true;
+    showNotif(companyCode, msg);
     refreshTable();
   } catch (e) {
     console.log(e);
+    showNotif(companyCode, msg);
   }
   isLoadingRequest.value = false;
   requestModal.value.closeModal();
