@@ -6,7 +6,6 @@ function pushUrl(companyCode, dir) {
 }
 
 export function showNotif(companyCode, msg) {
-  console.log(companyCode, msg)
   if (msg.value) {
     Notify.create({
       progress: true,
