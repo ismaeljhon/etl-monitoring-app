@@ -5,9 +5,7 @@
         <q-toolbar>
           <q-btn flat :ripple="false" href="/">
             <q-avatar square>
-              <img
-                :src="logo"
-              />
+              <img :src="logo" />
             </q-avatar>
 
             <q-toolbar-title> ETL - Sync Monitoring </q-toolbar-title>
@@ -25,5 +23,5 @@
 </template>
 
 <script setup lang="ts">
-import logo from './assets/inriver-logo-black.png'
+import logo from "./assets/inriver-logo-black.png"
 </script>

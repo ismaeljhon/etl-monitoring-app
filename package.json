@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@azure/msal-browser": "^2.31.0",
     "@quasar/extras": "^1.15.0",
     "axios": "^0.27.2",
     "lodash": "^4.17.21",
