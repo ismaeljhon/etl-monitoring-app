@@ -9,9 +9,9 @@ import * as Msal from "@azure/msal-browser";
 
 const msalConfig = {
   auth: {
-    clientId: "64705373-1068-4aa3-924e-4fe5f21d79f3",
+    clientId: "51e5687a-2775-40a0-8e73-4fc069de01a2",
     authority:
-      "https://login.microsoftonline.com/6678bda1-2c7a-4f50-a21c-6a70d66e6399/",
+      "https://login.microsoftonline.com/929ae199-3940-4e79-be0a-5d4ded31e040",
   },
   cache: {
     cacheLocation: "localStorage",
