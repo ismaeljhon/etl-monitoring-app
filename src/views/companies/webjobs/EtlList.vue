@@ -66,7 +66,7 @@ onMounted(async () => {
       <div class="q-ma-lg float-left">
         <q-btn
           icon="keyboard_double_arrow_left"
-          @click.prevent="router.push({ name: 'Home' })"
+          @click.prevent="router.push({ name: 'Companies' })"
           >Back To list</q-btn
         >
       </div>
