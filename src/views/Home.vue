@@ -20,6 +20,6 @@ const signIn = async () => {
 <template>
   <div>
     HOME
-    <q-btn @click="signIn">test</q-btn>
+    <q-btn @click="signIn">Sign In</q-btn>
   </div>
 </template>
