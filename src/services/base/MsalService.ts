@@ -43,7 +43,12 @@ export default class MsalService {
   async signOut() {
     const logoutRequest = {
       account: await this.msalObject.getActiveAccount(),
+      mainWindowRedirectUri: import.meta.env.VITE_AAD_LOGOUT_REDIRECT_URI,
     };
     this.msalObject.logoutPopup(logoutRequest);
+  }
+
+  async isAuthenticated() {
+    return (await this.msalObject.getActiveAccount()) ? true : false;
   }
 }
