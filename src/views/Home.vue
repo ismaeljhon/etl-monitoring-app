@@ -1,25 +1,32 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import MsalService from "../services/base/MsalService";
-import { showSimpleNotification } from '../composables/Notify'
+import logo from "../assets/inriver-logo-black.png";
+import { showSimpleNotification } from "../composables/Notify";
 
 // declarations
-const router = useRouter()
+const router = useRouter();
 
 // functions
 const signIn = async () => {
-  const resp = await new MsalService().signIn()
+  const resp = await new MsalService().signIn();
   if (resp) {
-    showSimpleNotification(`Welcome ${resp?.name}`)
-    router.push('/companies')
+    router.push("/companies/list");
   }
-}
-
+};
 </script>
 
 <template>
   <div>
-    HOME
-    <q-btn @click="signIn">Sign In</q-btn>
+    <div>
+      <div>
+        <img style="max-width: 250px;" :src="logo" alt="">
+      </div>
+    </div>
+    <div>
+      <div>
+        <q-btn @click="signIn">Test</q-btn>
+      </div>
+    </div>
   </div>
 </template>

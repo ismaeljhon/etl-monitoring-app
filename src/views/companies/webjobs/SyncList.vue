@@ -31,7 +31,7 @@ onMounted(async () => {
       <div class="q-ma-lg float-left">
         <q-btn
           icon="keyboard_double_arrow_left"
-          @click.prevent="router.push({ name: 'Companies' })"
+          @click.prevent="router.push({ name: 'CompanyList' })"
           >Back To Companies
         </q-btn>
       </div>

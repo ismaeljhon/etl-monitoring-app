@@ -35,7 +35,7 @@ onMounted(async () => {
               size="sm"
               flat
               color="info"
-              @click.prevent="router.push(`companies/${row.code}/webjobs/etl`)"
+              @click.prevent="router.push(`${row.code}/webjobs/etl`)"
             >
               ETL
             </q-btn>
@@ -43,7 +43,7 @@ onMounted(async () => {
               size="sm"
               flat
               color="secondary"
-              @click.prevent="router.push(`companies/${row.code}/webjobs/sync`)"
+              @click.prevent="router.push(`${row.code}/webjobs/sync`)"
             >
               Sync
             </q-btn>
@@ -65,7 +65,7 @@ onMounted(async () => {
                         flat
                         color="info"
                         @click.prevent="
-                          router.push(`companies/${items.row.code}/webjobs/etl`)
+                          router.push(`${items.row.code}/webjobs/etl`)
                         "
                       >
                         ETL
@@ -76,7 +76,7 @@ onMounted(async () => {
                         color="secondary"
                         @click.prevent="
                           router.push(
-                            `companies/${items.row.code}/webjobs/sync`
+                            `${items.row.code}/webjobs/sync`
                           )
                         "
                       >
