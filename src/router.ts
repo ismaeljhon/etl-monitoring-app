@@ -2,16 +2,6 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import MsalService from "./services/base/MsalService";
 
-const auth = async (to, from, next) => {
-  if (await new MsalService().getActiveAccount()) {
-    next();
-  } else {
-    next({
-      name: "Home",
-    });
-  }
-};
-
 export const routes: RouteRecordRaw[] = [
   {
     name: "Home",
@@ -19,9 +9,14 @@ export const routes: RouteRecordRaw[] = [
     component: () => import("./views/Home.vue"),
   },
   {
+    name: "Login",
+    path: "/auth/login",
+    component: () => import("./views/Login.vue"),
+  },
+  {
     name: "Companies",
     path: "/companies",
-    component: () => import("./layouts/Companies.vue"),
+    component: () => import("./layouts/DefaultLayout.vue"),
     children: [
       {
         name: "CompanyList",
@@ -59,8 +54,9 @@ export const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
-  const isAuthenticated = await new MsalService().isAuthenticated()
-    if (to.name !== "Home" && !isAuthenticated) next({ name: "CompanyList" });
-    else next();
-})
+router.beforeEach(async (to, from) => {
+  const isAuthenticated = await new MsalService().isAuthenticated();
+  if (!isAuthenticated && to.name !== "Login") {
+    return { name: "Login" };
+  }
+});

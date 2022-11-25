@@ -10,9 +10,7 @@
             <q-toolbar-title> ETL - SYNC Monitoring </q-toolbar-title>
           </q-btn>
           <q-toolbar-title />
-          <!-- <q-separator vertical dark />
-          <q-btn :disable="account ? false : true" class="q-ml-sm" flat label="Sign out" @click="signOut" /> -->
-          <User :account="account" @signout="signOut"/>
+          <User :account="account" @signout="signOut" />
         </q-toolbar>
       </q-header>
 
@@ -26,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, getCurrentInstance } from "vue";
+import { onMounted, ref } from "vue";
 import logo from "../assets/inriver-logo-black.png";
 import MsalService from "../services/base/MsalService";
 import User from "../components/User.vue";
