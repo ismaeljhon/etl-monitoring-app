@@ -23,11 +23,6 @@ export default class EvaluateEtlApiService extends ApiService {
           ...triggerRequestParams,
           date: date.formatDate(triggerRequestParams.date, "YYYY-MM-DD")
         },
-        headers: {
-          "x-api-key": "fceeef5e-625c-45da-9d97-eb044b7500ba",
-          "x-origin-url": "packages.detailonline.com",
-          "Content-Type": "application/json",
-        }
       })
       .then((res) => res.data);
   }
