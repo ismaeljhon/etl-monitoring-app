@@ -61,7 +61,7 @@ onMounted(() => {
           >Back To list</q-btn
         >
       </div>
-      <div class="q-mt-lg">
+      <div class="q-mt-lg" :class="$q.screen.lt.md ? '' : 'float-right'">
         <q-btn
           color="primary"
           icon="add"

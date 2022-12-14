@@ -26,7 +26,7 @@ const signIn = async () => {
     </div>
     <div class="row justify-center">
       <div class="col-24 q-my-xl">
-        <q-btn @click="signIn">Log In</q-btn>
+        <q-btn @click="signIn">Sign In</q-btn>
       </div>
     </div>
   </div>
