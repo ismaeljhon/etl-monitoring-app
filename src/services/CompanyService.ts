@@ -28,7 +28,7 @@ export default class CompanyService extends ApiService {
           Authorization: import.meta.env.VITE_COMPANY_AUTH,
         },
       });
-      console.log(response)
+      return response
     } catch (error) {
       if (error) {
         return companiesJson;
