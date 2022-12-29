@@ -37,8 +37,8 @@ export default class MsalService {
     }
   }
 
-  async getActiveAccount () {
-    return await this.msalObject.getActiveAccount();
+  async getActiveAccount (): Promise<AccountInfo | null> {
+    return this.msalObject.getActiveAccount();
   }
 
   async signOut () {
