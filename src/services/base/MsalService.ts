@@ -1,5 +1,6 @@
 import * as Msal from "@azure/msal-browser";
 import LocalStorageService from "../LocalStorageService";
+import { AccountInfo } from '@azure/msal-common';
 
 export default class MsalService {
   private localStorage: InstanceType<typeof LocalStorageService>;
