@@ -13,4 +13,26 @@ app.use(Quasar, {
   plugins: { Notify },
 });
 
-app.mount("#app");
+// mount the application
+const loadApp = () => {
+  const app = createApp(App);
+
+  app.use(router);
+  app.use(Quasar, {
+    plugins: { Notify },
+  });
+
+  app.mount("#app");
+
+}
+
+if (myMsalObject.getActiveAccount()) {
+  loadApp()
+} else {
+  const requestObject = {
+    scopes: ["User.Read"],
+  }
+  myMsalObject.loginPopup(requestObject).then(user => {
+    loadApp()
+  })
+}
