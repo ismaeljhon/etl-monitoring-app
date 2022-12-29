@@ -54,17 +54,9 @@ export const router = createRouter({
   routes,
 });
 
-<<<<<<< HEAD
 router.beforeEach(async (to, from) => {
   const isAuthenticated = await new MsalService().isAuthenticated();
   if (!isAuthenticated && to.name !== "Login") {
     return { name: "Login" };
   }
 });
-=======
-router.beforeEach(async (to, from, next) => {
-  const isAuthenticated = await new MsalService().isAuthenticated()
-    if (to.name !== "Home" && !isAuthenticated) next({ name: "CompanyList" });
-    else next();
-})
->>>>>>> cd6443e (changed routing and added children under companies)

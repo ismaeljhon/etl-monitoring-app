@@ -45,8 +45,8 @@ export function showNotif (companyCode, msg) {
 
 export function showSimpleNotification (msg) {
   Notify.create({
-    progress: true,
     message: `${msg}`,
+    position: "top",
     type: "positive",
   });
 }
