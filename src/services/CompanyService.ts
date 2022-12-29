@@ -19,7 +19,7 @@ export default class CompanyService extends ApiService {
     this.prefix = params?.prefix || "";
   }
 
-  async getList() {
+  async getList () {
     try {
       const response = await super.request({
         url: "http://accounts.detailonline.com/api/companies",
