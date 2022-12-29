@@ -16,13 +16,13 @@ export default class MsalService {
   private msalObject = new Msal.PublicClientApplication(this.msalConfig);
   private userName: string | undefined;
 
-  constructor() {}
+  constructor() { }
 
-  handleResponse(response) {
+  handleResponse (response) {
     console.log(response);
   }
 
-  async signIn() {
+  async signIn () {
     const requestObject = {
       scopes: ["User.Read"],
     };
@@ -36,11 +36,11 @@ export default class MsalService {
     }
   }
 
-  async getActiveAccount() {
+  async getActiveAccount () {
     return await this.msalObject.getActiveAccount();
   }
 
-  async signOut() {
+  async signOut () {
     const logoutRequest = {
       account: await this.msalObject.getActiveAccount(),
       mainWindowRedirectUri: import.meta.env.VITE_AAD_LOGOUT_REDIRECT_URI,
@@ -48,7 +48,7 @@ export default class MsalService {
     this.msalObject.logoutPopup(logoutRequest);
   }
 
-  async isAuthenticated() {
+  async isAuthenticated () {
     return (await this.msalObject.getActiveAccount()) ? true : false;
   }
 }
