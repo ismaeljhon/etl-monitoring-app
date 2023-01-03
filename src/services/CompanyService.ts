@@ -22,11 +22,11 @@ export default class CompanyService extends ApiService {
   async getList () {
     try {
       const response = await super.request({
-        method: "POST",
         headers: {
           Authorization: import.meta.env.VITE_COMPANY_AUTH,
         },
       });
+
       return response
     } catch (error) {
       if (error) {
