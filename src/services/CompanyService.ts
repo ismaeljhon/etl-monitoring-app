@@ -27,7 +27,9 @@ export default class CompanyService extends ApiService {
         },
       });
 
-      return response
+      const { data = [] } = response
+      const { companies = [] } = data
+      return companies
     } catch (error) {
       if (error) {
         return companiesJson;
