@@ -22,7 +22,6 @@ export default class CompanyService extends ApiService {
   async getList () {
     try {
       const response = await super.request({
-        url: "https://accounts.detailonline.com/api/companies",
         method: "POST",
         headers: {
           Authorization: import.meta.env.VITE_COMPANY_AUTH,
