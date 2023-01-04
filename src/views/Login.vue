@@ -2,6 +2,7 @@
 import { useRouter } from "vue-router";
 import MsalService from "../services/base/MsalService";
 import logo from "../assets/inriver-logo-black.png";
+import sign from "../assets/microsoft.svg";
 import { showSimpleNotification } from "../composables/Notify";
 
 // declarations
@@ -26,7 +27,21 @@ const signIn = async () => {
     </div>
     <div class="row justify-center">
       <div class="col-24 q-my-xl">
-        <q-btn @click="signIn">Sign In</q-btn>
+        <q-btn @click="signIn"
+          style="font-family: 'Segoe UI Regular; 
+          height: 41px;
+          border-radius:0px; 
+          font-size: 15px;
+          font-weight: 550;
+          font-color: #5E5E5E;"
+          outline
+          no-caps>
+         <img :src="sign" 
+          style="width:35px; 
+          padding-right: 12px" 
+          >
+          Sign in with Microsoft
+        </q-btn>
       </div>
     </div>
   </div>
