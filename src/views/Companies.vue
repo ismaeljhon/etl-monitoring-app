@@ -9,9 +9,21 @@ import { useRouter } from "vue-router";
 
 const companies = ref<Company[]>([]);
 const router = useRouter();
+const loading = ref(false)
+
+const fetchCompanies = async () => {
+  
+  try {
+    loading.value = true
+    companies.value = await new CompanyService().getList();
+    loading.value = false
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 onMounted(async () => {
-  companies.value = await new CompanyService().getList();
+  fetchCompanies()
 });
 </script>
 
@@ -19,7 +31,7 @@ onMounted(async () => {
   <div>
     <div class="row">
       <div class="col">
-        <TableList title="Companies" :rows="companies" :columns="companyColumns" row-key="name">
+        <TableList :loading="loading" title="Companies" :rows="companies" :columns="companyColumns" row-key="name">
           <template #status="row">
             <q-badge :color="row.obj.status === 'ACTIVE' ? 'green' : 'red'">
               {{ row.obj.status }}
