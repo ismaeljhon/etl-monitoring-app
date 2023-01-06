@@ -61,7 +61,7 @@ onMounted(() => {
           >Back To list</q-btn
         >
       </div>
-      <div class="q-mt-lg">
+      <div class="q-mt-lg" :class="$q.screen.lt.md ? '' : 'float-right'">
         <q-btn
           color="primary"
           icon="add"
@@ -107,12 +107,7 @@ onMounted(() => {
                 <b>{{ items.row.name }}</b>
               </div>
               <div class="col float-right">
-                <q-btn
-                  size="sm"
-                  flat
-                  color="info"
-                  @click.prevent="showOutput(items.row)"
-                >
+                <q-btn size="sm" flat color="info" @click.prevent="showOutput(items.row)">
                   View Logs
                 </q-btn>
               </div>
