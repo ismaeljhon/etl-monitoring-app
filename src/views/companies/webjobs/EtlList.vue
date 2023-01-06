@@ -9,7 +9,7 @@ import { companyEtlColumns } from "../../../composables/TableColumns";
 import { showNotif } from "../../../composables/Notify";
 import LatestRun from "../../../components/base/LatestRun.vue";
 import RequestModal from "../../../components/base/RequestModal.vue";
-import EtlTriggerService from "../../../services/EtlTriggerService";
+import EvaluateEtlApiService from "../../../services/EvaluateEtlApiService";
 
 const webjobs = ref<WebJob[]>([]);
 const route = useRoute();
@@ -32,7 +32,7 @@ const refreshTable = async () => {
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
   try {
-    const resp = await new EtlTriggerService().triggerEtl(dataRequest.value);
+    const resp = await new EvaluateEtlApiService().triggerEtl(dataRequest.value);
     msg.value = resp;
     showNotif(companyCode, msg);
     refreshTable();
@@ -64,19 +64,11 @@ onMounted(async () => {
   <div class="row">
     <div class="col col-12">
       <div class="q-ma-lg float-left">
-        <q-btn
-          icon="keyboard_double_arrow_left"
-          @click.prevent="router.push({ name: 'Home' })"
-          >Back To list</q-btn
-        >
+        <q-btn icon="keyboard_double_arrow_left" @click.prevent="router.push({ name: 'CompanyList' })">Back To
+          list</q-btn>
       </div>
       <div class="q-mt-lg" :class="$q.screen.lt.md ? '' : 'float-right'">
-        <q-btn
-          color="primary"
-          icon="add"
-          :class="$q.screen.lt.md ? '' : 'q-mx-md'"
-          @click="requestModal.show = true"
-        >
+        <q-btn color="primary" icon="add" :class="$q.screen.lt.md ? '' : 'q-mx-md'" @click="requestModal.show = true">
           ETL Request
         </q-btn>
       </div>
@@ -89,30 +81,15 @@ onMounted(async () => {
   </div>
   <div class="row">
     <div class="col col-12">
-      <TableList
-        class="q-ma-lg"
-        :title="`${companyCode} ETL Webjobs`"
-        :rows="webjobs"
-        :columns="companyEtlColumns"
-        :has-actions="true"
-        row-key="name"
-        @refresh="refreshTable"
-      >
+      <TableList class="q-ma-lg" :title="`${companyCode} ETL Webjobs`" :rows="webjobs" :columns="companyEtlColumns"
+        :has-actions="true" row-key="name" @refresh="refreshTable">
         <template #actions="{ row }">
-          <q-btn
-            size="sm"
-            flat
-            color="info"
-            @click.prevent="router.push(`etl/${row.name}`)"
-          >
+          <q-btn size="sm" flat color="info" @click.prevent="router.push(`etl/${row.name}`)">
             Details
           </q-btn>
         </template>
         <template #latest_run="{ row }">
-          <LatestRun
-            v-if="row.latest_run"
-            :latest_run="row.latest_run"
-          ></LatestRun>
+          <LatestRun v-if="row.latest_run" :latest_run="row.latest_run"></LatestRun>
           <span v-else>-</span>
         </template>
         <template #using_sdk="{ row }">
@@ -123,9 +100,7 @@ onMounted(async () => {
           </div>
         </template>
         <template #custom-grid="{ items }">
-          <div
-            class="q-pa-xs col-xs-12 col-sm-6 col-md-4 grid-style-transition"
-          >
+          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4 grid-style-transition">
             <q-card>
               <q-card-section>
                 <div class="row">
@@ -133,12 +108,7 @@ onMounted(async () => {
                     <b>{{ items.row.name }}</b>
                   </div>
                   <div class="col-auto">
-                    <q-btn
-                      size="sm"
-                      flat
-                      color="info"
-                      @click.prevent="router.push(`etl/${items.row.name}`)"
-                    >
+                    <q-btn size="sm" flat color="info" @click.prevent="router.push(`etl/${items.row.name}`)">
                       Details
                     </q-btn>
                   </div>
@@ -149,10 +119,7 @@ onMounted(async () => {
                 <q-item-section>
                   <q-item-label>
                     Latest Run:
-                    <LatestRun
-                      v-if="items.row.latest_run"
-                      :latest_run="items.row.latest_run"
-                    ></LatestRun>
+                    <LatestRun v-if="items.row.latest_run" :latest_run="items.row.latest_run"></LatestRun>
                     <span v-else>-</span>
                   </q-item-label>
                 </q-item-section>
@@ -166,13 +133,8 @@ onMounted(async () => {
   <RequestModal type="etl" ref="requestModal" @data="data">
     <template #footer-btns>
       <q-btn label="Cancel" v-close-popup v-show="!isLoadingRequest" />
-      <q-btn
-        color="primary"
-        :disabled="disabled"
-        label="Confirm"
-        @click.prevent="triggerEtlRequest"
-        :loading="isLoadingRequest"
-      />
+      <q-btn color="primary" :disabled="disabled" label="Confirm" @click.prevent="triggerEtlRequest"
+        :loading="isLoadingRequest" />
     </template>
   </RequestModal>
 </template>

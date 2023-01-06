@@ -1,11 +1,11 @@
 import { Notify } from "quasar";
 import { router } from "../../src/router";
 
-function pushUrl(companyCode, dir) {
+function pushUrl (companyCode, dir) {
   router.push(`/companies/${companyCode.value}/webjobs/etl/${dir}`);
 }
 
-export function showNotif(companyCode, msg) {
+export function showNotif (companyCode, msg) {
   if (msg.value) {
     Notify.create({
       progress: true,
@@ -23,7 +23,7 @@ export function showNotif(companyCode, msg) {
         {
           label: "Dismiss",
           color: "white",
-          handler: () => {},
+          handler: () => { },
         },
       ],
     });
@@ -36,9 +36,17 @@ export function showNotif(companyCode, msg) {
         {
           label: "Close",
           color: "white",
-          handler: () => {},
+          handler: () => { },
         },
       ],
     });
   }
+}
+
+export function showSimpleNotification (msg) {
+  Notify.create({
+    message: `${msg}`,
+    position: "top",
+    type: "positive",
+  });
 }

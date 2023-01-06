@@ -80,19 +80,6 @@
   {
     "url": "https://cloud.detailonline.com",
     "authorization_url": "https://cloud.detailonline.com/authorize",
-    "id": 13,
-    "name": "Haglöfs",
-    "code": "Q00",
-    "source": "Q00",
-    "is_internal": true,
-    "cms": "rearch",
-    "status": "ACTIVE",
-    "created_at": "2020-11-07T13:43:14.063Z",
-    "updated_at": "2022-01-17T05:31:25.727Z"
-  },
-  {
-    "url": "https://cloud.detailonline.com",
-    "authorization_url": "https://cloud.detailonline.com/authorize",
     "id": 14,
     "name": "Samsung Mobile",
     "code": "F00",
@@ -197,19 +184,6 @@
   {
     "url": "https://cloud.detailonline.com",
     "authorization_url": "https://cloud.detailonline.com/authorize",
-    "id": 31,
-    "name": "Kohler",
-    "code": "710",
-    "source": "710",
-    "is_internal": true,
-    "cms": null,
-    "status": "ACTIVE",
-    "created_at": "2021-08-24T06:11:55.606Z",
-    "updated_at": "2021-08-24T06:11:55.606Z"
-  },
-  {
-    "url": "https://cloud.detailonline.com",
-    "authorization_url": "https://cloud.detailonline.com/authorize",
     "id": 32,
     "name": "InRiver Dev",
     "code": "210",
@@ -250,27 +224,27 @@
     "url": "https://cloud.detailonline.com",
     "authorization_url": "https://cloud.detailonline.com/authorize",
     "id": 37,
-    "name": "Inriver-Testclient1",
+    "name": "inriver (QA - evaluatedelta)",
     "code": "D10",
     "source": "D10",
     "is_internal": true,
     "cms": "rearch",
     "status": "ACTIVE",
     "created_at": "2021-10-25T07:42:12.993Z",
-    "updated_at": "2021-10-25T07:42:12.993Z"
+    "updated_at": "2022-12-13T02:25:00.437Z"
   },
   {
     "url": "https://cloud.detailonline.com",
     "authorization_url": "https://cloud.detailonline.com/authorize",
     "id": 38,
-    "name": "Inriver-Testclient2",
+    "name": "Inriver (QA - evaluateepsilon)",
     "code": "E10",
     "source": "E10",
     "is_internal": true,
     "cms": "rearch",
     "status": "ACTIVE",
     "created_at": "2021-10-25T07:42:12.993Z",
-    "updated_at": "2021-10-25T07:42:12.993Z"
+    "updated_at": "2022-12-13T02:47:31.087Z"
   },
   {
     "url": "https://cloud.detailonline.com",
@@ -341,27 +315,27 @@
     "url": "https://cloud.detailonline.com",
     "authorization_url": "https://cloud.detailonline.com/authorize",
     "id": 48,
-    "name": "Inriver-Testclient8",
+    "name": "inriver (Demo - inrivertest)",
     "code": "K10",
     "source": "K10",
     "is_internal": true,
     "cms": "rearch",
     "status": "ACTIVE",
     "created_at": "2021-11-16T01:31:18.656Z",
-    "updated_at": "2021-11-16T01:31:18.656Z"
+    "updated_at": "2022-12-13T02:52:20.438Z"
   },
   {
     "url": "https://cloud.detailonline.com",
     "authorization_url": "https://cloud.detailonline.com/authorize",
     "id": 49,
-    "name": "Inriver-Testclient9",
+    "name": "inriver (Partner - inriversandbox)",
     "code": "L10",
     "source": "L10",
     "is_internal": true,
     "cms": "rearch",
     "status": "ACTIVE",
     "created_at": "2021-11-16T01:31:18.656Z",
-    "updated_at": "2021-11-16T01:31:18.656Z"
+    "updated_at": "2022-12-13T02:29:05.210Z"
   },
   {
     "url": "https://cloud.detailonline.com",
@@ -393,14 +367,14 @@
     "url": "https://cloud.detailonline.com",
     "authorization_url": "https://cloud.detailonline.com/authorize",
     "id": 52,
-    "name": "Inriver-Testclient12",
+    "name": "Miele",
     "code": "P10",
     "source": "P10",
     "is_internal": true,
     "cms": "rearch",
     "status": "ACTIVE",
     "created_at": "2021-12-22T06:37:45.833Z",
-    "updated_at": "2021-12-22T06:37:45.833Z"
+    "updated_at": "2022-12-13T02:28:06.546Z"
   },
   {
     "url": "https://cloud.detailonline.com",
