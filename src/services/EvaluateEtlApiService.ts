@@ -3,6 +3,7 @@ import ApiService from "./base/ApiService";
 import { date, uid } from "quasar";
 import MsalService from './base/MsalService';
 import { AccountInfo } from '@azure/msal-common';
+import { useEtlCompanyRestriction } from '../composables/EtlRules'
 
 export default class EvaluateEtlApiService extends ApiService {
   constructor() {
@@ -48,6 +49,12 @@ export default class EvaluateEtlApiService extends ApiService {
     if (!username)
       return console.error("Cannot save logs username not found")
 
+    /**
+     * Add remarks just in case the etl trigger requests during restricted time range (6pm - 4am)
+     */
+    const { isCompanyRestrictedToRunEtl } = useEtlCompanyRestriction(company_code.toUpperCase())
+    const remarks = isCompanyRestrictedToRunEtl ? 'Force Trigger during restricted time range' : ''
+
     const saveLogData: TriggerLogs = {
       uuid: uid(),
       username,
@@ -55,7 +62,8 @@ export default class EvaluateEtlApiService extends ApiService {
       datetime: date.formatDate(timeStamp, 'YYYY/MM/DD HH:mm:ss'),
       start_date_requested,
       webjob_type: 'etl',
-      status: TriggerStatus.start
+      status: TriggerStatus.start,
+      remarks
     }
 
     const containerName = `${import.meta.env.VITE_AZURE_STORAGE_PREFIX}${company_code.toLowerCase()}`
