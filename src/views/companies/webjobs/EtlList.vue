@@ -21,6 +21,7 @@ const msg = ref();
 const show = ref(false);
 const isLoadingRequest = ref(false);
 const disabled = ref(true);
+const imsg = ref()
 
 const refreshTable = async () => {
   webjobs.value = await new EtlService().getList({
@@ -29,12 +30,13 @@ const refreshTable = async () => {
   });
 };
 
+
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
   try {
     const resp = await new EvaluateEtlApiService().triggerEtl(dataRequest.value);
     msg.value = resp;
-    showNotif(companyCode, msg);
+    showNotif(companyCode.value, msg);
     refreshTable();
   } catch (e) {
     console.log(e);
@@ -71,6 +73,7 @@ onMounted(async () => {
         <q-btn color="primary" icon="add" :class="$q.screen.lt.md ? '' : 'q-mx-md'" @click="requestModal.show = true">
           ETL Request
         </q-btn>
+        <q-btn @click="showNotifTest">test</q-btn>
       </div>
     </div>
   </div>
