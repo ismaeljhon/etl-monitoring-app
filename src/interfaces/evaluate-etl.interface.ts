@@ -12,7 +12,8 @@ export interface TriggerLogs {
   company_code: string,
   start_date_requested: string
   webjob_type: string,
-  status: TriggerStatus
+  status: TriggerStatus,
+  remarks?: string
 }
 
 export enum TriggerStatus {
