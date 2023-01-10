@@ -9,8 +9,6 @@ export function useEtlCompanyRestriction (code: string) {
   // Company code should be listed in uppercase manner
   const companyCodesNotIncludedInTimeRestriction = ['A00']
 
-  console.log(!companyCodesNotIncludedInTimeRestriction.includes(code.toUpperCase()) && isInRestrictedTime(), code)
-
   if (!companyCodesNotIncludedInTimeRestriction.includes(code.toUpperCase()) && isInRestrictedTime()) {
     isCompanyRestrictedToRunEtl.value = true
   }
