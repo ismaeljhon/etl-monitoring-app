@@ -2,16 +2,21 @@
   <div>
     <q-layout view="lHh lpr lFf">
       <q-header elevated>
-        <q-toolbar>
+       <div class="row no-wrap">
+        <q-toolbar >
           <q-avatar square>
             <img :src="logo" />
           </q-avatar>
           <q-btn to="/companies/list" :ripple="false">
-            <q-toolbar-title> ETL - SYNC Monitoring </q-toolbar-title>
+            <q-toolbar-title class="title"> ETL - SYNC Monitoring </q-toolbar-title>
           </q-btn>
-          <q-toolbar-title />
+        </q-toolbar>
+        <q-toolbar>
+         <q-space/>
           <User :account="account" @signout="signOut" />
         </q-toolbar>
+       </div>
+       
       </q-header>
 
       <q-page-container>
@@ -45,3 +50,9 @@ onMounted(async () => {
   fetchUser();
 });
 </script>
+
+<style scoped>
+ .title {
+  font-size: 0.875em;
+ }
+</style>
