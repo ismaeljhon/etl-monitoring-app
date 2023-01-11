@@ -10,8 +10,8 @@ export default class EvaluateEtlApiService extends ApiService {
     super({
       baseURL: import.meta.env.VITE_ETL_API_BASE_URL,
       headers: {
-        "x-api-key": "fceeef5e-625c-45da-9d97-eb044b7500ba",
-        "x-origin-url": "packages.detailonline.com",
+        "x-api-key": import.meta.env.VITE_EVALUATE_API_KEY,
+        "x-origin-url": import.meta.env.VITE_EVALUATE_ORIGIN_URL,
         "Content-Type": "application/json",
       }
     })
