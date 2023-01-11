@@ -21,7 +21,6 @@ const msg = ref();
 const show = ref(false);
 const isLoadingRequest = ref(false);
 const disabled = ref(true);
-const imsg = ref()
 
 const refreshTable = async () => {
   webjobs.value = await new EtlService().getList({
@@ -73,7 +72,6 @@ onMounted(async () => {
         <q-btn color="primary" icon="add" :class="$q.screen.lt.md ? '' : 'q-mx-md'" @click="requestModal.show = true">
           ETL Request
         </q-btn>
-        <q-btn @click="showNotifTest">test</q-btn>
       </div>
     </div>
   </div>
