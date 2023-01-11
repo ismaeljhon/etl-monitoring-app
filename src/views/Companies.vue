@@ -1,14 +1,51 @@
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
 import TableList from "../components/base/TableList.vue";
 import CompanyService from "../services/CompanyService";
 import { companyColumns } from "../composables/TableColumns";
-import companiesJson from "../assets/companies.json";
 import { Company } from "../interfaces/company.interface";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import RequestModal from "../components/base/RequestModal.vue";
+import EvaluateApiService from "../services/base/EvaluateApiService";
 
+const $q = useQuasar()
 const companies = ref<Company[]>([]);
 const router = useRouter();
+const requestModal = ref()
+const selectedCompanyForClearCache = ref<string>('')
+const isLoadingClearCache = ref<boolean>(false)
+
+const showConfirmationForClearCache = (companyCode: string) => {
+  selectedCompanyForClearCache.value = companyCode
+  requestModal.value.show = true
+}
+
+const clearCache = async () => {
+  if (!selectedCompanyForClearCache.value)
+    return
+
+  isLoadingClearCache.value = true
+
+  try {
+    await new EvaluateApiService().clearCache(selectedCompanyForClearCache.value)
+  } catch (e) {
+    $q.notify({
+      type: 'negative',
+      message: 'There something wrong with clear cache. Please contact fe devs for support'
+    })
+    console.error(e)
+  }
+
+  isLoadingClearCache.value = false
+  requestModal.value.closeModal()
+
+  $q.notify({
+    type: 'positive',
+    message: `Clear cache for company ${selectedCompanyForClearCache.value} has been successfully executed`
+  })
+  selectedCompanyForClearCache.value = ''
+}
 
 onMounted(async () => {
   companies.value = await new CompanyService().getList();
@@ -32,6 +69,9 @@ onMounted(async () => {
             <q-btn size="sm" flat color="secondary" @click.prevent="router.push(`${row.code}/webjobs/sync`)">
               Sync
             </q-btn>
+            <q-btn size="sm" flat color="red-5" @click.prevent="showConfirmationForClearCache(row.code)">
+              Clear Cache
+            </q-btn>
           </template>
 
           <template #custom-grid="{ items }">
@@ -43,16 +83,11 @@ onMounted(async () => {
                       <b>{{ items.row.name }}</b>
                     </div>
                     <div class="col float-right">
-                      <q-btn size="sm" flat color="info" @click.prevent="
-  router.push(`${items.row.code}/webjobs/etl`)
-">
+                      <q-btn size="sm" flat color="info" @click.prevent="router.push(`${items.row.code}/webjobs/etl`)">
                         ETL
                       </q-btn>
-                      <q-btn size="sm" flat color="secondary" @click.prevent="
-  router.push(
-    `${items.row.code}/webjobs/sync`
-  )
-">
+                      <q-btn size="sm" flat color="secondary"
+                        @click.prevent="router.push(`${items.row.code}/webjobs/sync`)">
                         Sync
                       </q-btn>
                     </div>
@@ -80,4 +115,12 @@ onMounted(async () => {
       <div class="col"></div>
     </div>
   </div>
+
+  <RequestModal type="clear-cache" ref="requestModal">
+    <template #body-text>Are you sure you want to clear cache?</template>
+    <template #footer-btns>
+      <q-btn label="Cancel" v-close-popup v-show="!isLoadingClearCache" />
+      <q-btn color="primary" label="Confirm" @click.prevent="clearCache" :loading="isLoadingClearCache" />
+    </template>
+  </RequestModal>
 </template>
