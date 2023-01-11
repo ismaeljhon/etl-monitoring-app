@@ -11,18 +11,23 @@ const webjobs = ref<WebJob[]>([]);
 const route = useRoute();
 const router = useRouter();
 const companyCode = ref<string>(route.params.company_code.toString());
+const loading = ref(false)
 
 const refreshTable = async () => {
+  loading.value = true
   webjobs.value = await new SyncService().getList({
     company_code: companyCode.value,
     refresh: true,
   });
+  loading.value = false
 };
 onMounted(async () => {
+  loading.value = true
   webjobs.value = await new SyncService().getList({
     company_code: companyCode.value,
     refresh: true
   });
+  loading.value = false
 });
 </script>
 
@@ -42,6 +47,7 @@ onMounted(async () => {
         class="q-ma-lg"
         title="Sync WebJobs"
         :rows="webjobs"
+        :loading="loading"
         :columns="companySyncColumns"
         :has-actions="true"
         row-key="name"
