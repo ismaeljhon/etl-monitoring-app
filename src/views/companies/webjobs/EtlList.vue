@@ -29,12 +29,13 @@ const refreshTable = async () => {
   });
 };
 
+
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
   try {
     const resp = await new EvaluateEtlApiService().triggerEtl(dataRequest.value);
     msg.value = resp;
-    showNotif(companyCode, msg);
+    showNotif(companyCode.value, msg);
     refreshTable();
   } catch (e) {
     console.log(e);
