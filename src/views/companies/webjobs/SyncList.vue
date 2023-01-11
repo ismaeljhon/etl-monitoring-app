@@ -21,6 +21,7 @@ const refreshTable = async () => {
 onMounted(async () => {
   webjobs.value = await new SyncService().getList({
     company_code: companyCode.value,
+    refresh: true
   });
 });
 </script>

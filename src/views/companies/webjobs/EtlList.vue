@@ -57,6 +57,7 @@ const hideBanner = () => {
 onMounted(async () => {
   webjobs.value = await new EtlService().getList({
     company_code: companyCode.value,
+    refresh: true
   });
 });
 </script>
