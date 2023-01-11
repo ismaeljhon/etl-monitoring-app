@@ -107,12 +107,7 @@ onMounted(() => {
                 <b>{{ items.row.name }}</b>
               </div>
               <div class="col float-right">
-                <q-btn
-                  size="sm"
-                  flat
-                  color="info"
-                  @click.prevent="showOutput(items.row)"
-                >
+                <q-btn size="sm" flat color="info" @click.prevent="showOutput(items.row)">
                   View Logs
                 </q-btn>
               </div>
