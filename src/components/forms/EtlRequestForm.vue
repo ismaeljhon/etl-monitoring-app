@@ -34,7 +34,7 @@ defineEmits(["input"])
     <template #avatar>
       <q-icon name="warning" />
     </template>
-    Re-ETL regular schedule for this company is from <strong>4:01AM - 5:59PM</strong>. <br /><br />
+    Running ETL request in these restricted time range <br><strong>(6:00pm - 4:00am)</strong> <br /><br />
     Kindly proceed with caution, Devs are in bed cushion.
   </q-banner>
   <q-input label="Company" dense v-model="data.code" readonly autofocus />

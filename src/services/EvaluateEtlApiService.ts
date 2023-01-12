@@ -53,7 +53,7 @@ export default class EvaluateEtlApiService extends ApiService {
      * Add remarks just in case the etl trigger requests during restricted time range (6pm - 4am)
      */
     const { isCompanyRestrictedToRunEtl } = useEtlCompanyRestriction(company_code.toUpperCase())
-    const remarks = isCompanyRestrictedToRunEtl ? 'Force Trigger during restricted time range' : ''
+    const remarks = isCompanyRestrictedToRunEtl.value ? 'Force Trigger during restricted time range' : ''
 
     const saveLogData: TriggerLogs = {
       uuid: uid(),
