@@ -22,22 +22,15 @@ const pagination = ref({
 
 // hooks
 const data = computed(() => props.rows);
+
+defineEmits(['refresh'])
 </script>
 
 <template>
   <div class="q-pt-5">
-    <q-table
-      class="q-pt-lg"
-      :rows="data"
-      :columns="columns"
-      :row-key="rowKey"
-      :grid="$q.screen.lt.md"
-      :loading="loading"
-      :pagination="pagination"
-      :filter="filter.search"
-      no-data-label="I didn't find anything for you"
-      wrap-cells
-    >
+    <q-table class="q-pt-lg" :rows="data" :columns="columns" :row-key="rowKey" :grid="$q.screen.lt.md"
+      :loading="loading" :pagination="pagination" :filter="filter.search" no-data-label="I didn't find anything for you"
+      wrap-cells>
       <template #top-left>
         <slot name="top-left">
           <div class="q-table__title" v-text="title"></div>
@@ -47,28 +40,15 @@ const data = computed(() => props.rows);
         <slot name="top-right">
           <div class="row">
             <div class="col">
-              <q-input
-                outlined
-                dense
-                debounce="300"
-                v-model="filter.search"
-                placeholder="Search"
-              >
+              <q-input outlined dense debounce="300" v-model="filter.search" placeholder="Search">
                 <template v-slot:append>
                   <q-icon name="search" />
                 </template>
               </q-input>
             </div>
             <div class="col">
-              <q-btn
-                color="primary"
-                outline
-                icon="sync"
-                @click="$emit('refresh', filter)"
-                class="float-right q-ml-sm"
-              >
-                Refresh</q-btn
-              >
+              <q-btn color="primary" outline icon="sync" @click="$emit('refresh', filter)" class="float-right q-ml-sm">
+                Refresh</q-btn>
             </div>
           </div>
         </slot>

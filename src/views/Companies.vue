@@ -67,7 +67,8 @@ onMounted(async () => {
   <div>
     <div class="row">
       <div class="col">
-        <TableList :loading="loading" title="Companies" :rows="companies" :columns="companyColumns" row-key="name">
+        <TableList :loading="loading" title="Companies" :rows="companies" :columns="companyColumns" row-key="name"
+          @refresh="fetchCompanies">
           <template #status="row">
             <q-badge :color="row.obj.status === 'ACTIVE' ? 'green' : 'red'">
               {{ row.obj.status }}
