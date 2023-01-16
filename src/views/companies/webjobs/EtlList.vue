@@ -20,21 +20,25 @@ const dataRequest = ref();
 const msg = ref();
 const show = ref(false);
 const isLoadingRequest = ref(false);
+const isLoadingTable = ref(false);
 const disabled = ref(true);
 
 const refreshTable = async () => {
+  isLoadingTable.value = true
   webjobs.value = await new EtlService().getList({
     company_code: companyCode.value,
     refresh: true,
   });
+  isLoadingTable.value = false
 };
+
 
 const triggerEtlRequest = async () => {
   isLoadingRequest.value = true;
   try {
     const resp = await new EvaluateEtlApiService().triggerEtl(dataRequest.value);
     msg.value = resp;
-    showNotif(companyCode, msg);
+    showNotif(companyCode.value, msg);
     refreshTable();
   } catch (e) {
     console.log(e);
@@ -54,9 +58,12 @@ const hideBanner = () => {
 };
 
 onMounted(async () => {
+  isLoadingTable.value = true
   webjobs.value = await new EtlService().getList({
     company_code: companyCode.value,
+    refresh: true
   });
+  isLoadingTable.value = false
 });
 </script>
 
@@ -81,7 +88,7 @@ onMounted(async () => {
   </div>
   <div class="row">
     <div class="col col-12">
-      <TableList class="q-ma-lg" :title="`${companyCode} ETL Webjobs`" :rows="webjobs" :columns="companyEtlColumns"
+      <TableList class="q-ma-lg" :loading="isLoadingTable" :title="`${companyCode} ETL Webjobs`" :rows="webjobs" :columns="companyEtlColumns"
         :has-actions="true" row-key="name" @refresh="refreshTable">
         <template #actions="{ row }">
           <q-btn size="sm" flat color="info" @click.prevent="router.push(`etl/${row.name}`)">

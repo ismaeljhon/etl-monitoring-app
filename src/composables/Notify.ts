@@ -2,11 +2,11 @@ import { Notify } from "quasar";
 import { router } from "../../src/router";
 
 function pushUrl (companyCode, dir) {
-  router.push(`/companies/${companyCode.value}/webjobs/etl/${dir}`);
+  router.push(`/companies/${companyCode}/webjobs/etl/${dir}`);
 }
 
 export function showNotif (companyCode, msg) {
-  if (msg.value) {
+  if (msg.value.success) {
     Notify.create({
       progress: true,
       message: `${msg.value?.msg}. Webjob: ${msg.value?.dir}`,
@@ -17,7 +17,7 @@ export function showNotif (companyCode, msg) {
           label: "Check WebJob",
           color: "white",
           handler: () => {
-            pushUrl(companyCode.value, msg.value?.dir);
+            pushUrl(companyCode, msg.value?.dir);
           },
         },
         {

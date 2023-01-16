@@ -11,7 +11,7 @@ const show = ref(false);
 const emit = defineEmits(["data"]);
 
 const requestTitle = computed(() => {
-  return `${props.type.toUpperCase()} Request`;
+  return `${props.type.replaceAll('-', ' ').toUpperCase()} Request`;
 });
 
 const closeModal = () => {
